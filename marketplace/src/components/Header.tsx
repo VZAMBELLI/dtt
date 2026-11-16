@@ -34,6 +34,7 @@ export async function Header() {
           </nav>
         </div>
         <nav className="cats" aria-label="Tipos">
+          <Link href="/camadas">Proteção em camadas</Link>
           <Link href="/explorar">Tudo</Link>
           {TYPE_KEYS.map(t => <Link key={t} href={`/explorar?tipo=${t}`}>{TYPES[t].label}</Link>)}
           <Link href="/explorar?ordem=destaques">Destaques</Link>

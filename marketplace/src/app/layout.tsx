@@ -11,7 +11,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--f-mono", display:
 
 export const metadata: Metadata = {
   title: { default: "Secure Privacy Market", template: "%s · Secure Privacy Market" },
-  description: "Marketplace curado de segurança: equipamentos, serviços, produtos digitais e especialistas verificados."
+  description: "Proteção em camadas para o nível de segurança que você precisa: equipamentos, tecnologias, serviços e especialistas verificados."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
