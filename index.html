@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Privacy — Segurança Ofensiva e Proteção Executiva</title>
+  <meta name="description" content="Red Team, simulações de ataque controladas e proteção executiva discreta. Para organizações que preferem conhecer seus riscos antes de qualquer outra pessoa.">
+  <meta name="theme-color" content="#06080b">
+  <meta property="og:title" content="Secure Privacy — Segurança Ofensiva e Proteção Executiva">
+  <meta property="og:description" content="Para organizações que preferem conhecer seus riscos antes de qualquer outra pessoa.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a href="#topo" class="brand" aria-label="Secure Privacy — início">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".35"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/>
+          <circle cx="16" cy="16" r="3" fill="var(--signal)"/>
+          <path d="M16 1.5V7M16 25v5.5M1.5 16H7M25 16h5.5" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+        </svg>
+        <span class="brand__name">SECURE<b>PRIVACY</b></span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Principal">
+        <a href="#abordagem">Abordagem</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#sombra">Pessoa Sombra</a>
+        <a href="#redteam">Red Team</a>
+        <a href="#sigilo">Sigilo</a>
+        <a href="#contato" class="btn btn--sm btn--ghost nav__cta">Conversa reservada</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="topo">
+      <div class="hero__field" id="heroField" aria-hidden="true">
+        <div class="hero__grid"></div>
+        <!-- Camada revelada pela "lanterna": o que um adversário enxerga -->
+        <div class="hero__reveal" id="heroReveal">
+          <span style="--x:8%;--y:22%">[!] RDP 3389 exposto — 189.x.x.14</span>
+          <span style="--x:62%;--y:14%">credencial reutilizada · diretoria</span>
+          <span style="--x:74%;--y:46%">VPN sem MFA</span>
+          <span style="--x:14%;--y:64%">badge sem anti-clonagem · acesso B</span>
+          <span style="--x:46%;--y:80%">subdomínio esquecido · dev-old</span>
+          <span style="--x:80%;--y:76%">e-mail executivo em vazamento</span>
+          <span style="--x:34%;--y:34%">porta lateral · sem câmera</span>
+          <span style="--x:4%;--y:88%">agenda pública · CEO · quinta 19h</span>
+          <span style="--x:56%;--y:58%">SPF permissivo</span>
+          <span style="--x:86%;--y:30%">recepção · sem verificação</span>
+        </div>
+        <div class="hero__vignette"></div>
+      </div>
+
+      <div class="wrap hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow reveal"><span class="dot"></span> Segurança ofensiva · Proteção executiva</p>
+          <h1 class="hero__title reveal">
+            Para quem prefere conhecer seus riscos
+            <em>antes de qualquer outra pessoa.</em>
+          </h1>
+          <p class="hero__lead reveal">
+            Simulamos adversários reais, com escopo definido, autorização formal e metodologia auditável,
+            para que sua organização decida com base em <strong>evidência</strong>, não em suposição.
+          </p>
+          <div class="hero__actions reveal">
+            <a href="#contato" class="btn btn--primary">Agendar conversa técnica
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
+            <a href="#servicos" class="btn btn--ghost">Conhecer os serviços</a>
+          </div>
+          <p class="hero__hint reveal" aria-hidden="true"><span class="mono">// mova o cursor e veja o que um adversário enxergaria</span></p>
+        </div>
+
+        <aside class="console reveal" aria-label="Exemplo de registro de operação">
+          <div class="console__bar">
+            <span class="console__dots"><i></i><i></i><i></i></span>
+            <span class="mono">op-log · engajamento autorizado</span>
+            <span class="console__live"><i></i> LIVE</span>
+          </div>
+          <pre class="console__body mono" id="consoleBody"></pre>
+        </aside>
+      </div>
+
+      <a href="#abordagem" class="hero__scroll" aria-label="Rolar para baixo"><span></span></a>
+    </section>
+
+    <!-- ============ FRAMEWORKS ============ -->
+    <div class="ticker" aria-label="Frameworks e normas de referência">
+      <div class="ticker__track">
+        <span>MITRE ATT&amp;CK</span><span>NIST CSF</span><span>ISO/IEC 27001</span><span>OWASP</span><span>PTES</span><span>OSSTMM</span><span>LGPD</span><span>CVSS 3.1</span>
+        <span aria-hidden="true">MITRE ATT&amp;CK</span><span aria-hidden="true">NIST CSF</span><span aria-hidden="true">ISO/IEC 27001</span><span aria-hidden="true">OWASP</span><span aria-hidden="true">PTES</span><span aria-hidden="true">OSSTMM</span><span aria-hidden="true">LGPD</span><span aria-hidden="true">CVSS 3.1</span>
+      </div>
+    </div>
+
+    <!-- ============ ABORDAGEM ============ -->
+    <section class="section" id="abordagem">
+      <div class="wrap">
+        <p class="label reveal">01 — Abordagem</p>
+        <div class="manifesto">
+          <h2 class="manifesto__title reveal">
+            Firewalls, EDR, políticas de acesso e treinamentos são essenciais.
+            <span>Mas a pergunta que realmente importa é outra:</span>
+          </h2>
+          <div class="manifesto__q reveal">
+            <p>O que acontece quando alguém decide testar <em>tudo isso</em> ao mesmo tempo?</p>
+          </div>
+          <div class="manifesto__body reveal">
+            <p>É exatamente essa pergunta que respondemos. Combinamos intrusão técnica, engenharia social e avaliação física em operações coordenadas, reproduzindo as táticas de grupos reais mapeadas no MITRE ATT&amp;CK.</p>
+            <p>Ao longo do processo, sua equipe passa a enxergar o ambiente com outra clareza. E essa clareza permanece muito depois que o projeto termina.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat reveal"><b>4</b><span>vetores integrados<br>lógico · físico · social · humano</span></div>
+          <div class="stat reveal"><b>100%</b><span>das ações registradas<br>e rastreáveis</span></div>
+          <div class="stat reveal"><b>0</b><span>ações executadas<br>sem aval do contratante</span></div>
+          <div class="stat reveal"><b>24/7</b><span>canal direto para<br>achados críticos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVIÇOS ============ -->
+    <section class="section section--alt" id="servicos">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label reveal">02 — Serviços</p>
+          <h2 class="h2 reveal">Uma única pergunta, investigada por todos os ângulos.</h2>
+          <p class="section__sub reveal">Cada serviço pode ser contratado isoladamente. Juntos, mostram o quadro completo.</p>
+        </div>
+
+        <div class="cards">
+          <a href="#redteam" class="card card--feature reveal">
+            <span class="card__tag mono">RT-01</span>
+            <h3>Red Team Operations</h3>
+            <p>Operações orientadas a objetivo e de baixo ruído. Medimos se é possível alcançar seus ativos críticos e quanto tempo sua defesa leva para perceber.</p>
+            <span class="card__more">Ver metodologia →</span>
+          </a>
+          <a href="#sombra" class="card card--feature reveal">
+            <span class="card__tag mono">PS-01</span>
+            <h3>Pessoa Sombra</h3>
+            <p>Um operador de proteção executiva ao seu lado, integrado ao ambiente, que observa, interpreta e antecipa sem jamais ser identificado.</p>
+            <span class="card__more">Ver especificações →</span>
+          </a>
+          <article class="card reveal">
+            <span class="card__tag mono">PT-02</span>
+            <h3>Pentest de Aplicações e Infraestrutura</h3>
+            <p>Web, APIs, mobile, rede interna e externa e cloud (AWS, Azure, GCP), seguindo OWASP, PTES e OSSTMM.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__tag mono">ES-03</span>
+            <h3>Engenharia Social</h3>
+            <p>Phishing direcionado, vishing e pretexting. Pessoas costumam ser o vetor mais subestimado e, com preparo, o mais resiliente.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__tag mono">SF-04</span>
+            <h3>Segurança Física</h3>
+            <p>Controle de acesso, tailgating, clonagem de credenciais RFID e análise de perímetro. A proteção digital começa na porta de entrada.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__tag mono">OS-05</span>
+            <h3>OSINT e Exposição Digital</h3>
+            <p>Mapeamos o que já está disponível publicamente sobre sua empresa e seus executivos. Em geral, é mais do que se imagina.</p>
+          </article>
+          <article class="card reveal">
+            <span class="card__tag mono">PU-06</span>
+            <h3>Purple Team</h3>
+            <p>Trabalho conjunto com seu SOC para calibrar detecções em tempo real. Cada técnica executada vira uma regra validada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PESSOA SOMBRA ============ -->
+    <section class="section shadow" id="sombra">
+      <div class="wrap">
+        <div class="split">
+          <div class="split__text">
+            <p class="label reveal">03 — Pessoa Sombra</p>
+            <h2 class="h2 reveal">Presença invisível.<br><span class="muted">Proteção contínua.</span></h2>
+            <p class="lead reveal">Há momentos em que a segurança visível atrapalha mais do que protege. Uma negociação sensível, um evento público, um deslocamento em ambiente desconhecido: situações em que um segurança aparente chama exatamente a atenção que você quer evitar.</p>
+            <p class="reveal">O serviço <strong>Pessoa Sombra</strong> coloca ao seu lado um operador de proteção executiva que se integra naturalmente ao ambiente. Ele observa, interpreta e antecipa, sem jamais ser identificado como parte da sua equipe.</p>
+            <p class="punch reveal">Você segue focado no que importa.<br>Ele cuida de todo o resto.</p>
+          </div>
+
+          <div class="radar reveal" aria-hidden="true">
+            <div class="radar__ring r1"></div>
+            <div class="radar__ring r2"></div>
+            <div class="radar__ring r3"></div>
+            <div class="radar__sweep"></div>
+            <span class="radar__dot d1"></span><span class="radar__dot d2"></span><span class="radar__dot d3"></span>
+            <span class="radar__dot d4"></span><span class="radar__dot d5"></span><span class="radar__dot d6"></span>
+            <span class="radar__dot d7"></span><span class="radar__dot d8"></span>
+            <span class="radar__client"><i></i><em class="mono">CLIENTE</em></span>
+            <span class="radar__op"><i></i><em class="mono">OP-01 · neutro</em></span>
+            <span class="radar__flag"><i></i><em class="mono">padrão anômalo</em></span>
+          </div>
+        </div>
+
+        <div class="specs">
+          <div class="specs__col reveal">
+            <h3 class="h3"><span class="mono">//</span> Especificações operacionais</h3>
+            <ul class="list">
+              <li>Operador com formação em proteção executiva e contrainteligência</li>
+              <li>Análise comportamental, leitura corporal e reconhecimento de padrões de ameaça</li>
+              <li>Comunicação segura e criptografada com a base remota</li>
+              <li>Atuação em perfis neutros: convidado, assessor ou acompanhante, conforme o contexto</li>
+              <li>Protocolo de resposta rápida integrado a dispositivos de pânico e rastreamento</li>
+              <li>Registro operacional criptografado para análise posterior</li>
+            </ul>
+          </div>
+
+          <div class="specs__col reveal">
+            <h3 class="h3"><span class="mono">//</span> Quando faz diferença</h3>
+            <div class="tabs" role="tablist" aria-label="Situações recomendadas">
+              <button role="tab" aria-selected="true" aria-controls="sit-panel" data-i="0">Reuniões de alto risco</button>
+              <button role="tab" aria-selected="false" aria-controls="sit-panel" data-i="1">Exposição pública</button>
+              <button role="tab" aria-selected="false" aria-controls="sit-panel" data-i="2">Disputas e litígios</button>
+              <button role="tab" aria-selected="false" aria-controls="sit-panel" data-i="3">Vulnerabilidade</button>
+            </div>
+            <div class="tabs__panel" id="sit-panel" role="tabpanel" aria-live="polite">
+              <p id="sitText">Negociações com possibilidade de pressão, intimidação ou abuso de poder.</p>
+            </div>
+
+            <h3 class="h3 h3--space"><span class="mono">//</span> O que muda na prática</h3>
+            <ul class="list list--check">
+              <li>Uma segunda camada de proteção que não altera a dinâmica do ambiente</li>
+              <li>Leitura contínua do cenário, com detecção de sinais que costumam passar despercebidos</li>
+              <li>Resposta coordenada com a base em tempo real</li>
+              <li>Uma presença que transmite segurança mesmo quando ninguém mais sabe que ela está ali</li>
+            </ul>
+          </div>
+        </div>
+
+        <blockquote class="quote reveal">
+          <p>“A diferença entre ser observado e estar protegido está em quem caminha ao seu lado.”</p>
+          <a href="#contato" class="btn btn--ghost" data-service="sombra">Solicitar avaliação reservada</a>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ RED TEAM ============ -->
+    <section class="section section--alt" id="redteam">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label reveal">04 — Simulação de Ataque · Red Team</p>
+          <h2 class="h2 reveal">Toda organização acredita que está protegida <span class="muted">até ser testada.</span></h2>
+          <p class="section__sub reveal">Auditorias verificam se os controles <em>existem</em>. O Red Team verifica se eles <strong>funcionam</strong> quando alguém realmente tenta contorná-los.</p>
+        </div>
+
+        <p class="lead lead--narrow reveal">Conduzimos simulações controladas de ataques cibernéticos, físicos e comportamentais, reproduzindo as táticas, técnicas e procedimentos (TTPs) de adversários reais, internos ou externos. O resultado é uma visão precisa e mensurável da resiliência da sua empresa.</p>
+
+        <ol class="chain" id="chain">
+          <li class="chain__step reveal">
+            <span class="chain__n mono">01</span>
+            <h3>Briefing executivo</h3>
+            <p>Objetivos, regras de engajamento, limites e ativos críticos definidos com a diretoria.</p>
+          </li>
+          <li class="chain__step reveal">
+            <span class="chain__n mono">02</span>
+            <h3>Reconhecimento</h3>
+            <p>OSINT, mapeamento de infraestrutura e análise de exposição humana, como faria um adversário.</p>
+          </li>
+          <li class="chain__step reveal">
+            <span class="chain__n mono">03</span>
+            <h3>Execução controlada</h3>
+            <p>Vetores lógicos, físicos e sociais, isolados ou combinados, com rastreabilidade de cada ação.</p>
+          </li>
+          <li class="chain__step reveal">
+            <span class="chain__n mono">04</span>
+            <h3>Relatório e remediação</h3>
+            <p>Sumário executivo para a diretoria; detalhamento técnico com evidências, criticidade e plano de correção priorizado.</p>
+          </li>
+          <span class="chain__line" aria-hidden="true"><i id="chainFill"></i></span>
+        </ol>
+
+        <p class="punch punch--center reveal">Ao final, sua equipe não recebe apenas um relatório.<br>Ela passa a enxergar o ambiente como um adversário enxergaria.</p>
+
+        <div class="grid2">
+          <div class="panel reveal">
+            <h3 class="h3"><span class="mono">//</span> Vetores simulados</h3>
+            <ul class="vectors mono">
+              <li><span>T1190</span>Intrusão em rede com exploração de vulnerabilidades conhecidas e de configuração</li>
+              <li><span>T1078</span>Acesso não autorizado a sistemas, dispositivos e contas privilegiadas</li>
+              <li><span>PHY</span>Acesso físico a áreas restritas com credenciais clonadas e tailgating</li>
+              <li><span>T1041</span>Exfiltração simulada de dados sensíveis</li>
+              <li><span>T1566</span>Cadeias combinadas: phishing direcionado, payloads controlados e movimentação lateral</li>
+            </ul>
+          </div>
+          <div class="panel reveal">
+            <h3 class="h3"><span class="mono">//</span> Resultados estratégicos</h3>
+            <dl class="results">
+              <div><dt>Visibilidade real</dt><dd>Falhas que só aparecem sob pressão adversária.</dd></div>
+              <div><dt>Prontidão</dt><dd>Equipes treinadas para detectar e responder em tempo real.</dd></div>
+              <div><dt>Evidência</dt><dd>Comprovação objetiva da eficácia dos protocolos atuais.</dd></div>
+              <div><dt>Redução de superfície</dt><dd>Exposição digital, física e humana reduzida de forma mensurável.</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <blockquote class="quote reveal">
+          <p>“Só quem tenta entrar conhece o caminho. E só quem conhece o caminho sabe como fechá-lo.”</p>
+          <a href="#contato" class="btn btn--ghost" data-service="redteam">Agendar briefing técnico</a>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ SIGILO ============ -->
+    <section class="section" id="sigilo">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label reveal">05 — Conformidade e sigilo</p>
+          <h2 class="h2 reveal">Tudo o que você nos conta fica entre nós.<br><span class="muted">Tudo o que encontramos pertence a você.</span></h2>
+        </div>
+        <div class="trust">
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6l-8-3Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            <h3>Autorização formal</h3>
+            <p>Toda operação parte de escopo e regras de engajamento assinados pela diretoria. Nenhuma ação é executada sem aval do contratante.</p>
+          </div>
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            <h3>NDA e conduta sigilosa</h3>
+            <p>Todos os operadores atuam sob acordo de confidencialidade e código de conduta. Evidências criptografadas, com cadeia de custódia preservada.</p>
+          </div>
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 9h8M8 12h8M8 15h5" stroke="currentColor" stroke-width="1.4"/></svg>
+            <h3>Legislação e frameworks</h3>
+            <p>Atuação estritamente dentro da legislação vigente e da LGPD, alinhada a MITRE ATT&amp;CK, NIST CSF e ISO/IEC 27001.</p>
+          </div>
+          <div class="trust__item reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            <h3>Zero impacto operacional</h3>
+            <p>Execução sem dano real ou interrupção do negócio. Vulnerabilidades críticas são comunicadas imediatamente, durante a operação.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTATO ============ -->
+    <section class="section contact" id="contato">
+      <div class="wrap contact__inner">
+        <div class="contact__copy">
+          <p class="label reveal">06 — Contato</p>
+          <h2 class="h2 reveal">Toda organização tem um cenário de risco.<br><span class="muted">A diferença está em quem o descobre primeiro.</span></h2>
+          <p class="reveal">Você pode começar por um pentest pontual, por uma avaliação de proteção executiva ou ir direto para uma operação de Red Team completa. Em todos os casos, o primeiro passo é o mesmo: uma conversa técnica, reservada e sem compromisso.</p>
+          <ul class="contact__meta mono reveal">
+            <li><span>Resposta</span> em até 1 dia útil</li>
+            <li><span>Canal</span> à sua escolha</li>
+            <li><span>Registro</span> nenhum dado é compartilhado</li>
+          </ul>
+        </div>
+
+        <form class="form reveal" id="contactForm" novalidate>
+          <fieldset class="form__group">
+            <legend>Por onde você prefere começar?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="servico" value="Red Team" checked><span>Red Team</span></label>
+              <label class="chip"><input type="radio" name="servico" value="Pessoa Sombra"><span>Pessoa Sombra</span></label>
+              <label class="chip"><input type="radio" name="servico" value="Pentest"><span>Pentest</span></label>
+              <label class="chip"><input type="radio" name="servico" value="Ainda avaliando"><span>Ainda avaliando</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form__row">
+            <label class="field"><span>Nome</span><input type="text" name="nome" autocomplete="name" required></label>
+            <label class="field"><span>Empresa</span><input type="text" name="empresa" autocomplete="organization"></label>
+          </div>
+          <div class="form__row">
+            <label class="field"><span>E-mail ou telefone</span><input type="text" name="contato" autocomplete="email" required></label>
+            <label class="field"><span>Canal preferido</span>
+              <select name="canal">
+                <option>E-mail</option>
+                <option>Ligação</option>
+                <option>Mensagem criptografada</option>
+                <option>Reunião presencial</option>
+              </select>
+            </label>
+          </div>
+          <label class="field"><span>Contexto <em>(opcional — compartilhe apenas o que se sentir confortável)</em></span>
+            <textarea name="mensagem" rows="4"></textarea>
+          </label>
+
+          <button type="submit" class="btn btn--primary btn--block">Iniciar conversa reservada
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+          <p class="form__note mono">🔒 Transmissão criptografada · Tratamento conforme a LGPD</p>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <div>
+        <a href="#topo" class="brand brand--footer">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".35"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/>
+            <circle cx="16" cy="16" r="3" fill="var(--signal)"/>
+          </svg>
+          <span class="brand__name">SECURE<b>PRIVACY</b></span>
+        </a>
+        <p class="footer__tag">Segurança ofensiva e proteção executiva.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Rodapé">
+        <a href="#servicos">Serviços</a>
+        <a href="#sombra">Pessoa Sombra</a>
+        <a href="#redteam">Red Team</a>
+        <a href="#sigilo">Sigilo</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <p class="footer__legal mono">© <span id="year">2026</span> Secure Privacy · Todas as operações são conduzidas mediante autorização formal do contratante.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
