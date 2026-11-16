@@ -1,51 +1,51 @@
 export type Level = "essencial" | "reforcado" | "critico";
 
 export const LEVELS: { id: Level; name: string; who: string; text: string }[] = [
-  { id: "essencial", name: "Essencial", who: "Para a vida e o trabalho de todo dia",
-    text: "A maior parte dos riscos se resolve com hábitos simples e ferramentas bem escolhidas. Não é preciso muito. É preciso começar." },
-  { id: "reforcado", name: "Reforçado", who: "Para quem tem mais a proteger",
-    text: "Empresas, profissionais expostos, famílias com patrimônio. Aqui as camadas físicas entram, e vale a pena testar o que já existe." },
-  { id: "critico", name: "Crítico", who: "Para quando um erro custa caro demais",
-    text: "Negociações sensíveis, executivos, dados que não podem vazar. Cada camada é reforçada e verificada por quem pensa como um adversário." }
+  { id: "essencial", name: "Essencial", who: "Pessoa física · pequeno negócio",
+    text: "Higiene de credenciais, criptografia em repouso e em trânsito, atualização contínua. Cobre a maior parte dos vetores oportunistas: phishing, reuso de senha, perda de dispositivo." },
+  { id: "reforcado", name: "Reforçado", who: "Empresa · profissional exposto",
+    text: "Autenticação resistente a phishing, gestão centralizada de endpoints, autenticação de domínio e controles físicos auditáveis. Inclui validação periódica por pentest." },
+  { id: "critico", name: "Crítico", who: "Executivos · ativos críticos",
+    text: "Modelo de ameaça com adversário direcionado. Privilégio segregado, contravigilância, simulação de ataque completa (TTPs mapeadas no MITRE ATT&CK) e proteção executiva." }
 ];
 
 export const LAYERS: {
   n: string; name: string; idea: string; tech: { t: string; d: string; level: Level }[]; q: string;
 }[] = [
-  { n: "01", name: "Identidade", q: "senha",
-    idea: "Quase todo acesso indevido começa com alguém se passando por você. Proteger quem você é vem antes de proteger o que você tem.",
+  { n: "L1", name: "Identidade e acesso", q: "senha",
+    idea: "Credenciais comprometidas seguem como o vetor inicial mais comum. O controle começa em quem pode se autenticar e como.",
     tech: [
-      { t: "Gerenciador de senhas", d: "Uma senha longa e diferente para cada lugar, sem precisar decorar nenhuma.", level: "essencial" },
-      { t: "Chaves de segurança FIDO2 e passkeys", d: "Autenticação que não pode ser copiada nem enganada por um site falso.", level: "reforcado" },
-      { t: "Contas separadas por função", d: "O que é administrativo não se mistura com o uso diário.", level: "critico" }
+      { t: "Gerenciador de senhas com cofre cifrado", d: "Senhas únicas de alta entropia; cofre cifrado localmente (AES-256) com arquitetura zero-knowledge.", level: "essencial" },
+      { t: "MFA resistente a phishing (FIDO2/WebAuthn)", d: "Chaves de hardware e passkeys vinculadas à origem: não funcionam em domínio falso. Substituem SMS e OTP.", level: "reforcado" },
+      { t: "Privilégio mínimo e contas segregadas", d: "Contas administrativas separadas, acesso just-in-time e revisão periódica de permissões.", level: "critico" }
     ] },
-  { n: "02", name: "Dispositivos", q: "software",
-    idea: "Seu celular e seu computador carregam a sua vida inteira. Se um deles se perde, o que está dentro deve continuar seu.",
+  { n: "L2", name: "Endpoints", q: "software",
+    idea: "Notebooks e celulares concentram credenciais, sessões e dados. A premissa é que serão perdidos, furtados ou atacados.",
     tech: [
-      { t: "Criptografia de disco completa", d: "Sem a sua chave, os dados são apenas ruído.", level: "essencial" },
-      { t: "Atualizações automáticas", d: "A maior parte das falhas exploradas já tinha correção disponível.", level: "essencial" },
-      { t: "EDR e gestão de dispositivos", d: "Detecção de comportamento anômalo e resposta em equipamentos da empresa.", level: "reforcado" }
+      { t: "Criptografia de disco completa", d: "BitLocker, FileVault ou LUKS (AES-XTS) com chave protegida por TPM ou Secure Enclave.", level: "essencial" },
+      { t: "Patch management automatizado", d: "Correção contínua de SO e aplicações; a maioria das explorações usa CVEs com correção já publicada.", level: "essencial" },
+      { t: "EDR + MDM", d: "Detecção comportamental, isolamento remoto, políticas de configuração e wipe em caso de perda.", level: "reforcado" }
     ] },
-  { n: "03", name: "Comunicação", q: "treinamento",
-    idea: "Uma conversa privada deveria continuar privada. Isso não depende de confiança. Depende de matemática.",
+  { n: "L3", name: "Comunicação e rede", q: "treinamento",
+    idea: "O que trafega deve permanecer confidencial e autêntico, independentemente da rede por onde passa.",
     tech: [
-      { t: "Criptografia de ponta a ponta", d: "Mensagens e chamadas que só quem participa consegue ler.", level: "essencial" },
-      { t: "Proteção de domínio e e-mail", d: "SPF, DKIM e DMARC impedem que alguém envie mensagens em seu nome.", level: "reforcado" },
-      { t: "Varredura de ambientes", d: "Verificação de RF e óptica antes de reuniões que não podem ser ouvidas.", level: "critico" }
+      { t: "Criptografia de ponta a ponta", d: "Mensageria com protocolo Signal (Double Ratchet, forward secrecy). O servidor não tem acesso ao conteúdo.", level: "essencial" },
+      { t: "Autenticação de domínio: SPF, DKIM, DMARC", d: "DMARC em p=reject impede spoofing do seu domínio em campanhas de phishing.", level: "reforcado" },
+      { t: "Segmentação e contravigilância", d: "VLANs isolando CFTV e IoT, 802.1X na rede interna e varredura de RF e óptica em salas sensíveis.", level: "critico" }
     ] },
-  { n: "04", name: "Ambiente físico", q: "câmera",
-    idea: "Toda proteção digital termina numa porta, numa sala, num cofre. O mundo físico ainda é onde muita coisa acontece.",
+  { n: "L4", name: "Perímetro físico", q: "câmera",
+    idea: "Controles lógicos dependem de controles físicos. Acesso físico a um ativo frequentemente anula as demais camadas.",
     tech: [
-      { t: "Controle de acesso com credencial criptografada", d: "Cartões que não podem ser clonados com um leitor barato.", level: "reforcado" },
-      { t: "CFTV com gravação criptografada", d: "Imagens guardadas sob o seu controle, não expostas na internet.", level: "reforcado" },
-      { t: "Cofres e alarmes com pânico silencioso", d: "Proteção que funciona mesmo quando você não pode pedir ajuda em voz alta.", level: "essencial" }
+      { t: "Alarme monitorado e pânico silencioso", d: "Sensores com supervisão de linha, comunicação redundante (IP + 4G) e acionamento discreto com geolocalização.", level: "essencial" },
+      { t: "Controle de acesso com credencial cifrada", d: "MIFARE DESFire EV3 (AES-128) em vez de 125 kHz ou MIFARE Classic, que são clonáveis em segundos.", level: "reforcado" },
+      { t: "CFTV com gravação local cifrada", d: "NVR em rede segregada, streams via TLS, sem portas expostas à internet e com retenção definida.", level: "reforcado" }
     ] },
-  { n: "05", name: "Pessoas e rotina", q: "proteção",
-    idea: "A camada mais importante é também a mais humana. Saber o que está exposto sobre você já muda a forma como você se move.",
+  { n: "L5", name: "Pessoas e processos", q: "proteção",
+    idea: "Engenharia social contorna controles técnicos. Exposição pública alimenta ataques direcionados. Processos definem a resposta.",
     tech: [
-      { t: "Diagnóstico de exposição (OSINT)", d: "Descobrir o que qualquer pessoa já consegue saber sobre você ou sua empresa.", level: "reforcado" },
-      { t: "Treinamento contra engenharia social", d: "Pessoas preparadas reconhecem o golpe antes que ele funcione.", level: "essencial" },
-      { t: "Red Team e proteção executiva", d: "Testar tudo sob pressão real e ter alguém atento quando a situação pede.", level: "critico" }
+      { t: "Conscientização com simulação de phishing", d: "Treinamento contínuo com métricas de clique e reporte por área.", level: "essencial" },
+      { t: "Diagnóstico de exposição (OSINT)", d: "Levantamento de dados públicos, vazamentos e pegada digital de empresa e executivos, com plano de redução.", level: "reforcado" },
+      { t: "Red Team e proteção executiva", d: "Simulação de adversário com escopo e RoE assinados, e operador de proteção em agendas de risco.", level: "critico" }
     ] }
 ];
 

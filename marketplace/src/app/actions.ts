@@ -18,12 +18,14 @@ const safeNext = (n: string) => (n.startsWith("/") && !n.startsWith("//") ? n : 
 export async function signup(f: FormData) {
   const name = str(f, "name", 80), email = str(f, "email", 120).toLowerCase(), password = String(f.get("password") ?? "");
   const next = safeNext(str(f, "next"));
-  if (name.length < 2) back("/cadastrar", "Informe seu nome.");
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) back("/cadastrar", "E-mail inválido.");
-  if (password.length < 8) back("/cadastrar", "A senha precisa ter pelo menos 8 caracteres.");
-  if (await db.user.findUnique({ where: { email } })) back("/cadastrar", "Já existe uma conta com este e-mail.");
+  const form = next === "/vender" ? "/vender" : `/cadastrar?next=${encodeURIComponent(next)}`;
+  if (name.length < 2) back(form, "Informe seu nome.");
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) back(form, "E-mail inválido.");
+  if (password.length < 8) back(form, "A senha precisa ter pelo menos 8 caracteres.");
+  if (await db.user.findUnique({ where: { email } })) back(form, "Já existe uma conta com este e-mail.");
   const user = await db.user.create({ data: { name, email, passwordHash: await bcrypt.hash(password, 12) } });
   await createSession(user.id);
+  revalidatePath("/", "layout");
   redirect(next);
 }
 
@@ -34,11 +36,13 @@ export async function login(f: FormData) {
   const ok = user ? await bcrypt.compare(password, user.passwordHash) : await bcrypt.compare(password, "$2a$12$invalidinvalidinvalidinvalidinvalidinvalidinvalidinva");
   if (!user || !ok) back(`/entrar?next=${encodeURIComponent(next)}`, "E-mail ou senha incorretos.");
   await createSession(user!.id);
+  revalidatePath("/", "layout");
   redirect(next);
 }
 
 export async function logout() {
   await destroySession();
+  revalidatePath("/", "layout");
   redirect("/");
 }
 
@@ -52,6 +56,7 @@ export async function addToCart(f: FormData) {
   const cur = lines.find(l => l.id === id);
   if (cur) cur.q = Math.min(99, cur.q + q); else lines.push({ id, q });
   await writeCart(lines);
+  revalidatePath("/", "layout");
   redirect("/carrinho?ok=1");
 }
 
@@ -60,7 +65,7 @@ export async function setCartQty(f: FormData) {
   const q = parseInt(str(f, "q", 3)) || 0;
   const lines = (await readCart()).map(l => (l.id === id ? { ...l, q: Math.min(99, q) } : l)).filter(l => l.q > 0);
   await writeCart(lines);
-  revalidatePath("/carrinho");
+  revalidatePath("/", "layout");
 }
 
 /* ---------------- Checkout ---------------- */
@@ -102,6 +107,7 @@ export async function checkout(f: FormData) {
   const charge = await paymentProvider().createCharge({ orderCode: code, totalCents, platformFeeCents: feeCents, splits, method });
   await db.order.update({ where: { id: order.id }, data: { paymentRef: charge.ref } });
   await writeCart([]);
+  revalidatePath("/", "layout");
   redirect(`/pedidos/${order.code}`);
 }
 
@@ -163,6 +169,7 @@ export async function applySeller(f: FormData) {
   let slug = slugify(name) || "loja";
   if (await db.store.findUnique({ where: { slug } })) slug += "-" + randomBytes(2).toString("hex");
   await db.store.create({ data: { userId: user.id, name, slug, kind, document, city, bio, credentials } });
+  revalidatePath("/", "layout");
   redirect("/painel?novo=1");
 }
 

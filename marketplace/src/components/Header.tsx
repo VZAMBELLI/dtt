@@ -22,9 +22,8 @@ export async function Header() {
             <button type="submit" aria-label="Buscar"><Icon name="search" size={16} /></button>
           </form>
           <nav className="top__nav" aria-label="Conta">
-            {user?.store
-              ? <Link href="/painel" className="hide-sm"><Icon name="store" size={16} />Painel</Link>
-              : <Link href="/vender" className="hide-sm">Vender</Link>}
+            {user?.store && <Link href="/painel" className="hide-sm"><Icon name="store" size={16} />Painel</Link>}
+            <Link href={user?.store ? "/painel/anuncios/novo" : "/vender"} className="btn btn--primary btn--sm nav-sell">Anunciar</Link>
             {user?.role === "ADMIN" && <Link href="/admin" className="hide-sm">Admin</Link>}
             {user
               ? <><Link href="/conta"><Icon name="user" size={16} /><span className="hide-sm">{user.name.split(" ")[0]}</span></Link>

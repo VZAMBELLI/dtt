@@ -26,12 +26,15 @@ export default async function Home() {
           <div>
             <span className="eyebrow">Proteção em camadas</span>
             <h1>Proteção em camadas. <span>Para o nível de segurança que você precisa.</span></h1>
-            <p>Nenhuma ferramenta protege tudo sozinha. Cada camada cobre o que a anterior deixa passar. Aqui você encontra equipamentos, tecnologias e pessoas para montar a sua, no seu ritmo e do seu jeito.</p>
+            <p>Defesa em profundidade aplicada a cinco camadas: identidade, endpoints, comunicação, perímetro físico e pessoas. Equipamentos, software, serviços e especialistas verificados, organizados pelo nível de ameaça que você precisa cobrir.</p>
             <form action="/explorar" className="hero__search" role="search">
               <label htmlFor="q-hero" className="sr">O que você precisa proteger?</label>
               <input id="q-hero" name="q" placeholder="O que você precisa proteger?" />
               <button className="btn btn--primary" type="submit">Buscar <Icon name="arrow" size={16} /></button>
             </form>
+            <div className="row" style={{ marginTop: 18 }}>
+              <Link href="/vender" className="btn btn--ghost"><Icon name="store" size={16} /> Anunciar produto ou serviço</Link>
+            </div>
             <div className="hero__tags">
               {["pentest", "câmera", "fechadura", "LGPD", "pânico", "proteção executiva"].map(t =>
                 <Link key={t} href={`/explorar?q=${encodeURIComponent(t)}`}>{t}</Link>)}
@@ -48,7 +51,7 @@ export default async function Home() {
       <section className="section">
         <div className="wrap">
           <div className="head">
-            <div><span className="eyebrow">Escolha o seu nível</span><h2>Cada camada no lugar certo, nem mais nem menos.</h2></div>
+            <div><span className="eyebrow">Escolha o seu nível</span><h2>Controles por camada e por nível de ameaça</h2></div>
             <Link href="/camadas" className="link">Entender as camadas →</Link>
           </div>
           <LayerExplorer compact />
@@ -57,10 +60,10 @@ export default async function Home() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap creed">
-          <blockquote>Privacidade não é algo que se esconde. É o espaço onde uma pessoa pode ser livre.</blockquote>
+          <blockquote>Privacidade não é algo que se esconde. É uma condição para decidir com liberdade.</blockquote>
           <div className="creed__body">
-            <p>Acreditamos que cada pessoa tem o direito de proteger o que é seu: sua casa, seu trabalho, suas conversas, sua rotina. Esse direito não deveria depender de quanto alguém sabe sobre tecnologia.</p>
-            <p>Por isso este lugar existe. Não para dizer a ninguém do que ter medo, mas para colocar as ferramentas certas ao alcance de quem decide se proteger. Quem melhor conhece os seus riscos é você. A escolha continua sendo sua.</p>
+            <p>Nenhum controle isolado é suficiente, e nenhum ambiente é igual a outro. Uma camada compensa a falha da anterior. O objetivo não é tornar a invasão impossível, é torná-la cara, lenta e detectável.</p>
+            <p>Este marketplace reúne o que compõe cada camada, com especificações claras e vendedores verificados. Sem alarmismo: quem melhor conhece o próprio modelo de ameaça é você. A decisão continua sendo sua.</p>
           </div>
         </div>
       </section>
@@ -107,9 +110,9 @@ export default async function Home() {
           <div className="sellcta">
             <div>
               <span className="eyebrow">Para vendedores</span>
-              <h2>Se você constrói uma das camadas, este espaço também é seu.</h2>
-              <p className="dim">Empresas e profissionais independentes vendem aqui lado a lado. Você se cadastra, a verificação acontece, e o seu trabalho chega a pessoas que já entenderam por que ele importa.</p>
-              <Link href="/vender" className="btn btn--primary">Quero vender <Icon name="arrow" size={16} /></Link>
+              <h2>Venda equipamentos, software, serviços ou horas técnicas.</h2>
+              <p className="dim">Empresas (CNPJ) e profissionais independentes (CPF/MEI). Cadastro em três etapas: conta, dados da loja para verificação e anúncios. Cada anúncio passa por curadoria antes de ir ao ar.</p>
+              <Link href="/vender" className="btn btn--primary">Cadastrar minha loja <Icon name="arrow" size={16} /></Link>
             </div>
             <ul>
               <li>Selo de vendedor verificado</li>

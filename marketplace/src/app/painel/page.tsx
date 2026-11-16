@@ -21,7 +21,7 @@ export default async function Painel({ searchParams }: { searchParams: SP }) {
     <>
       <span className="eyebrow">Painel do vendedor</span>
       <h1 className="page-title">{store.name}</h1>
-      {one(sp.novo) && <p className="alert alert--ok">Cadastro enviado. Enquanto a equipe analisa sua loja, você já pode preparar anúncios.</p>}
+      {one(sp.novo) && <div className="alert alert--ok row between"><span>Loja enviada para verificação. Etapa 3: cadastre seus produtos e serviços. Eles ficam públicos após a aprovação.</span><Link className="btn btn--primary btn--sm" href="/painel/anuncios/novo">Cadastrar primeiro anúncio</Link></div>}
       {store.status === "PENDING" && !one(sp.novo) && <p className="alert alert--info">Sua loja está em análise. Os anúncios ficam visíveis assim que ela for aprovada.</p>}
       {store.status === "REJECTED" && <p className="alert alert--bad">Sua loja não foi aprovada. Fale com a equipe de curadoria.</p>}
       <div className="kpis" style={{ marginTop: 20 }}>

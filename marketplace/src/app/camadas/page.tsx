@@ -3,12 +3,13 @@ import { LayerExplorer } from "@/components/LayerExplorer";
 
 export const metadata = { title: "Proteção em camadas" };
 
+
 const principles = [
-  ["Nenhuma camada é perfeita", "Toda ferramenta falha em algum momento. Por isso elas se sobrepõem: o que uma deixa passar, a seguinte segura."],
-  ["Comece pelo que é simples", "Uma senha única em cada lugar e um celular criptografado já afastam a maior parte dos problemas. O resto vem depois, se fizer sentido."],
-  ["Proporção, não excesso", "Proteção demais também pesa: atrapalha a rotina e acaba abandonada. A medida certa é a que você consegue manter."],
-  ["Prefira o que pode ser verificado", "Criptografia aberta e auditada, padrões públicos, testes feitos por terceiros. Confiança se constrói com o que pode ser conferido."],
-  ["Você decide", "Ninguém conhece seus riscos como você. Nosso papel é explicar com honestidade e deixar a escolha com quem vai viver com ela."]
+  ["Defesa em profundidade", "Controles sobrepostos e independentes. A falha de um não compromete o ambiente inteiro."],
+  ["Modelo de ameaça primeiro", "Quem é o adversário provável, o que ele quer e qual capacidade tem. A escolha dos controles decorre disso, não de tendência."],
+  ["Proporcionalidade", "Controles acima do necessário geram atrito e acabam contornados. O nível certo é o que se sustenta na operação."],
+  ["Padrões abertos e verificáveis", "Criptografia pública e auditada, protocolos documentados, testes independentes. Segurança por obscuridade não é controle."],
+  ["Assumir a violação", "Projetar para detectar, conter e recuperar. Registro, segmentação e resposta importam tanto quanto prevenção."]
 ];
 
 export default function Camadas() {
@@ -18,13 +19,13 @@ export default function Camadas() {
         <div className="wrap" style={{ position: "relative", maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
           <span className="eyebrow">Proteção em camadas</span>
           <h1>Para o nível de segurança <span>que você precisa.</span></h1>
-          <p style={{ maxWidth: 680 }}>Segurança não é um produto que se compra uma vez. É uma sequência de camadas: identidade, dispositivos, comunicação, ambiente e pessoas. Cada uma cobre o que a anterior deixa passar, e juntas tornam o caminho longo demais para quem tenta entrar.</p>
+          <p style={{ maxWidth: 700 }}>Defesa em profundidade: cinco camadas de controle — identidade e acesso, endpoints, comunicação e rede, perímetro físico, pessoas e processos. Cada uma reduz a probabilidade ou o impacto do que passou pela anterior. Juntas, elevam o custo do ataque e encurtam o tempo até a detecção.</p>
         </div>
       </section>
 
       <section className="section">
         <div className="wrap">
-          <div className="head"><div><span className="eyebrow">Escolha o seu nível</span><h2>As camadas e as tecnologias de cada uma</h2></div></div>
+          <div className="head"><div><span className="eyebrow">Escolha o seu nível</span><h2>Controles e tecnologias por camada</h2></div></div>
           <LayerExplorer />
         </div>
       </section>
@@ -32,7 +33,7 @@ export default function Camadas() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap" style={{ maxWidth: 900 }}>
           <span className="eyebrow">Princípios</span>
-          <h2 style={{ fontSize: "clamp(24px,2.8vw,34px)", marginBottom: 24 }}>O que guia as nossas escolhas</h2>
+          <h2 style={{ fontSize: "clamp(24px,2.8vw,34px)", marginBottom: 24 }}>Princípios de arquitetura</h2>
           <ol className="stackl">
             {principles.map(([t, d], i) => (
               <li key={t} className="stackl__row" style={{ gridTemplateColumns: "48px 1fr" }}>
@@ -46,10 +47,10 @@ export default function Camadas() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap creed" style={{ maxWidth: 1000 }}>
-          <blockquote>Uma pessoa protegida não é uma pessoa com medo. É uma pessoa que pode escolher.</blockquote>
+          <blockquote>Proteção não é medo. É reduzir o que está fora do seu controle.</blockquote>
           <div className="creed__body">
-            <p>Quando você cuida da sua privacidade, não está escondendo nada. Está guardando o espaço onde pensa, conversa, trabalha e vive sem precisar pedir licença.</p>
-            <p>Esse espaço vale ser defendido com calma, com bom senso e com as ferramentas certas. Se precisar de ajuda para escolher, os especialistas daqui podem orientar. Se já sabe o que quer, o caminho está aberto.</p>
+            <p>Privacidade é o que permite pensar, conversar e trabalhar sem exposição desnecessária. Protegê-la é uma decisão técnica, não um sinal de culpa.</p>
+            <p>Se ainda não tem um modelo de ameaça definido, um especialista pode ajudar a montá-lo. Se já tem, os controles estão organizados por camada.</p>
             <div className="row" style={{ marginTop: 8 }}>
               <Link className="btn btn--primary" href="/explorar">Explorar as opções</Link>
               <Link className="btn btn--ghost" href="/explorar?tipo=PROFESSIONAL">Falar com um especialista</Link>
