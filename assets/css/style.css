@@ -2,6 +2,7 @@
    Secure Privacy — estilo
    ========================================================== */
 :root {
+  color-scheme: dark;
   --bg: #06080b;
   --bg-2: #0a0d12;
   --bg-3: #0f131a;
@@ -42,7 +43,7 @@ em { font-style: normal; }
 
 .mono { font-family: var(--mono); font-size: .78em; letter-spacing: .02em; }
 .muted { color: var(--text-3); }
-.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
 
 .skip { position: absolute; left: -999px; top: 8px; background: var(--signal); color: var(--bg); padding: 8px 14px; border-radius: 8px; z-index: 100; }
 .skip:focus { left: 8px; }
@@ -98,7 +99,7 @@ em { font-style: normal; }
 .section__sub em { color: var(--text); border-bottom: 1px dashed var(--text-3); }
 
 /* ---------- Reveal ---------- */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal { transform: translateY(14px); transition: transform .9s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* ==========================================================
@@ -407,7 +408,7 @@ em { font-style: normal; }
 }
 
 @media (max-width: 600px) {
-  .wrap { padding: 0 16px; }
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   .btn { white-space: normal; text-align: center; height: auto; min-height: var(--h); padding-top: 12px; padding-bottom: 12px; line-height: 1.3; max-width: 100%; }
   .hero { padding-top: 112px; }
   .hero__actions .btn { width: 100%; }
