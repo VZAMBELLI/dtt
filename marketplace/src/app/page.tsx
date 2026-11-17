@@ -24,9 +24,8 @@ export default async function Home() {
       <section className="hero">
         <div className="wrap hero__in">
           <div>
-            <span className="eyebrow">Proteção em camadas</span>
-            <h1>Proteção em camadas. <span>Para o nível de segurança que você precisa.</span></h1>
-            <p>Defesa em profundidade aplicada a cinco camadas: identidade, endpoints, comunicação, perímetro físico e pessoas. Equipamentos, software, serviços e especialistas verificados, organizados pelo nível de ameaça que você precisa cobrir.</p>
+            <h1>Proteção em camadas. <span>No nível que você precisa.</span></h1>
+            <p>Equipamentos, software, serviços e especialistas verificados.</p>
             <form action="/explorar" className="hero__search" role="search">
               <label htmlFor="q-hero" className="sr">O que você precisa proteger?</label>
               <input id="q-hero" name="q" placeholder="O que você precisa proteger?" />
@@ -41,9 +40,9 @@ export default async function Home() {
             </div>
           </div>
           <div className="trustbox">
-            <div><Icon name="shield" /><p><b>Vendedores verificados</b><span>{stores} lojas e profissionais com documentos e credenciais conferidos.</span></p></div>
-            <div><Icon name="eye" /><p><b>Curadoria de cada anúncio</b><span>Itens de venda proibida ou restrita não entram no catálogo.</span></p></div>
-            <div><Icon name="lock" /><p><b>Pagamento protegido</b><span>O valor só é repassado ao vendedor depois da entrega confirmada.</span></p></div>
+            <div><Icon name="shield" /><p><b>Vendedores verificados</b><span>Documento e credencial conferidos.</span></p></div>
+            <div><Icon name="eye" /><p><b>Anúncios revisados</b><span>Item proibido não entra.</span></p></div>
+            <div><Icon name="lock" /><p><b>Pagamento protegido</b><span>Vendedor recebe após a entrega.</span></p></div>
           </div>
         </div>
       </section>
@@ -51,26 +50,17 @@ export default async function Home() {
       <section className="section">
         <div className="wrap">
           <div className="head">
-            <div><span className="eyebrow">Escolha o seu nível</span><h2>Controles por camada e por nível de ameaça</h2></div>
-            <Link href="/camadas" className="link">Entender as camadas →</Link>
+            <h2>Escolha o nível</h2>
+            <Link href="/camadas" className="link">Ver detalhes →</Link>
           </div>
           <LayerExplorer compact />
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap creed">
-          <blockquote>Privacidade não é algo que se esconde. É uma condição para decidir com liberdade.</blockquote>
-          <div className="creed__body">
-            <p>Nenhum controle isolado é suficiente, e nenhum ambiente é igual a outro. Uma camada compensa a falha da anterior. O objetivo não é tornar a invasão impossível, é torná-la cara, lenta e detectável.</p>
-            <p>Este marketplace reúne o que compõe cada camada, com especificações claras e vendedores verificados. Sem alarmismo: quem melhor conhece o próprio modelo de ameaça é você. A decisão continua sendo sua.</p>
-          </div>
-        </div>
-      </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="head"><h2>Por onde você quer começar?</h2></div>
+          <div className="head"><h2>Categorias</h2></div>
           <div className="types">
             {TYPE_KEYS.map(t => (
               <Link key={t} href={`/explorar?tipo=${t}`} className="type">
@@ -86,21 +76,21 @@ export default async function Home() {
 
       {featured.length > 0 && <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="head"><div><span className="eyebrow">Selecionados</span><h2>Destaques da curadoria</h2></div><Link href="/explorar?ordem=destaques" className="link">Ver todos →</Link></div>
+          <div className="head"><h2>Destaques</h2><Link href="/explorar?ordem=destaques" className="link">Ver todos →</Link></div>
           <div className="grid">{featured.map(l => <ListingCard key={l.id} l={l} />)}</div>
         </div>
       </section>}
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="head"><div><span className="eyebrow">Especialistas</span><h2>Serviços e profissionais</h2></div><Link href="/explorar?tipo=SERVICE" className="link">Ver serviços →</Link></div>
+          <div className="head"><h2>Serviços e profissionais</h2><Link href="/explorar?tipo=SERVICE" className="link">Ver serviços →</Link></div>
           <div className="grid">{services.map(l => <ListingCard key={l.id} l={l} />)}</div>
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="head"><div><span className="eyebrow">Equipamentos</span><h2>Proteção física e eletrônica</h2></div><Link href="/explorar?tipo=PHYSICAL" className="link">Ver equipamentos →</Link></div>
+          <div className="head"><h2>Equipamentos</h2><Link href="/explorar?tipo=PHYSICAL" className="link">Ver equipamentos →</Link></div>
           <div className="grid">{physical.map(l => <ListingCard key={l.id} l={l} />)}</div>
         </div>
       </section>
@@ -109,16 +99,15 @@ export default async function Home() {
         <div className="wrap">
           <div className="sellcta">
             <div>
-              <span className="eyebrow">Para vendedores</span>
-              <h2>Venda equipamentos, software, serviços ou horas técnicas.</h2>
-              <p className="dim">Empresas (CNPJ) e profissionais independentes (CPF/MEI). Cadastro em três etapas: conta, dados da loja para verificação e anúncios. Cada anúncio passa por curadoria antes de ir ao ar.</p>
-              <Link href="/vender" className="btn btn--primary">Cadastrar minha loja <Icon name="arrow" size={16} /></Link>
+              <h2>Venda aqui.</h2>
+              <p className="dim">Empresa ou profissional. Cadastro em 3 etapas.</p>
+              <Link href="/vender" className="btn btn--primary">Cadastrar loja <Icon name="arrow" size={16} /></Link>
             </div>
             <ul>
-              <li>Selo de vendedor verificado</li>
-              <li>Recebimento automático com divisão de pagamento</li>
-              <li>Pedidos de orçamento para serviços sob medida</li>
-              <li>Painel com vendas, estoque e solicitações</li>
+              <li>Selo de verificado</li>
+              <li>Pagamento dividido automático</li>
+              <li>Orçamentos no painel</li>
+              <li>Vendas e estoque em um lugar</li>
             </ul>
           </div>
         </div>

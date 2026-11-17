@@ -289,7 +289,7 @@ p { margin: 0 0 1em; }
 .level__bars { display: flex; gap: 3px; margin-bottom: 8px; }
 .level__bars i { width: 18px; height: 4px; border-radius: 2px; background: var(--line-2); }
 .level__bars i.f { background: var(--signal); }
-.levels__text { color: var(--text-2); max-width: 680px; margin: 0; min-height: 3.2em; }
+.levels__text { color: var(--text-2); max-width: 680px; margin: 0; }
 .stackl { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
 .stackl__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 24px; padding: 22px 24px; border-bottom: 1px solid var(--line); background: var(--bg-2); position: relative; transition: opacity .3s; }
 .stackl__row:last-child { border-bottom: 0; }
@@ -396,31 +396,31 @@ const pill = ([t, tone]) => `<span class="pill${tone ? " pill--" + tone : ""}">$
 /* ---------------- Camadas ---------------- */
 const RANK = { essencial: 0, reforcado: 1, critico: 2 };
 const LEVELS = [
-  { id: "essencial", name: "Essencial", who: "Pessoa física · pequeno negócio", text: "Higiene de credenciais, criptografia em repouso e em trânsito, atualização contínua. Cobre a maior parte dos vetores oportunistas: phishing, reuso de senha, perda de dispositivo." },
-  { id: "reforcado", name: "Reforçado", who: "Empresa · profissional exposto", text: "Autenticação resistente a phishing, gestão centralizada de endpoints, autenticação de domínio e controles físicos auditáveis. Inclui validação periódica por pentest." },
-  { id: "critico", name: "Crítico", who: "Executivos · ativos críticos", text: "Modelo de ameaça com adversário direcionado. Privilégio segregado, contravigilância, simulação de ataque completa (TTPs mapeadas no MITRE ATT&CK) e proteção executiva." }
+  { id: "essencial", name: "Essencial", who: "Pessoa · pequeno negócio", text: "Senhas, criptografia e atualizações. Barra a maioria dos ataques comuns." },
+  { id: "reforcado", name: "Reforçado", who: "Empresa", text: "Chave física, EDR, controle de acesso cifrado e pentest." },
+  { id: "critico", name: "Crítico", who: "Executivos · dados críticos", text: "Red Team, contravigilância e proteção executiva." }
 ];
 const LAYERS = [
-  { n: "L1", name: "Identidade e acesso", q: "senha", idea: "Credenciais comprometidas seguem como o vetor inicial mais comum. O controle começa em quem pode se autenticar e como.", tech: [
-    ["Gerenciador de senhas com cofre cifrado", "Senhas únicas de alta entropia; cofre cifrado localmente (AES-256) com arquitetura zero-knowledge.", "essencial"],
-    ["MFA resistente a phishing (FIDO2/WebAuthn)", "Chaves de hardware e passkeys vinculadas à origem: não funcionam em domínio falso. Substituem SMS e OTP.", "reforcado"],
-    ["Privilégio mínimo e contas segregadas", "Contas administrativas separadas, acesso just-in-time e revisão periódica de permissões.", "critico"]] },
-  { n: "L2", name: "Endpoints", q: "software", idea: "Notebooks e celulares concentram credenciais, sessões e dados. A premissa é que serão perdidos, furtados ou atacados.", tech: [
-    ["Criptografia de disco completa", "BitLocker, FileVault ou LUKS (AES-XTS) com chave protegida por TPM ou Secure Enclave.", "essencial"],
-    ["Patch management automatizado", "Correção contínua de SO e aplicações; a maioria das explorações usa CVEs com correção já publicada.", "essencial"],
-    ["EDR + MDM", "Detecção comportamental, isolamento remoto, políticas de configuração e wipe em caso de perda.", "reforcado"]] },
-  { n: "L3", name: "Comunicação e rede", q: "treinamento", idea: "O que trafega deve permanecer confidencial e autêntico, independentemente da rede por onde passa.", tech: [
-    ["Criptografia de ponta a ponta", "Mensageria com protocolo Signal (Double Ratchet, forward secrecy). O servidor não tem acesso ao conteúdo.", "essencial"],
-    ["Autenticação de domínio: SPF, DKIM, DMARC", "DMARC em p=reject impede spoofing do seu domínio em campanhas de phishing.", "reforcado"],
-    ["Segmentação e contravigilância", "VLANs isolando CFTV e IoT, 802.1X na rede interna e varredura de RF e óptica em salas sensíveis.", "critico"]] },
-  { n: "L4", name: "Perímetro físico", q: "câmera", idea: "Controles lógicos dependem de controles físicos. Acesso físico a um ativo frequentemente anula as demais camadas.", tech: [
-    ["Alarme monitorado e pânico silencioso", "Sensores com supervisão de linha, comunicação redundante (IP + 4G) e acionamento discreto com geolocalização.", "essencial"],
-    ["Controle de acesso com credencial cifrada", "MIFARE DESFire EV3 (AES-128) em vez de 125 kHz ou MIFARE Classic, que são clonáveis em segundos.", "reforcado"],
-    ["CFTV com gravação local cifrada", "NVR em rede segregada, streams via TLS, sem portas expostas à internet e com retenção definida.", "reforcado"]] },
-  { n: "L5", name: "Pessoas e processos", q: "proteção", idea: "Engenharia social contorna controles técnicos. Exposição pública alimenta ataques direcionados. Processos definem a resposta.", tech: [
-    ["Conscientização com simulação de phishing", "Treinamento contínuo com métricas de clique e reporte por área.", "essencial"],
-    ["Diagnóstico de exposição (OSINT)", "Levantamento de dados públicos, vazamentos e pegada digital de empresa e executivos, com plano de redução.", "reforcado"],
-    ["Red Team e proteção executiva", "Simulação de adversário com escopo e RoE assinados, e operador de proteção em agendas de risco.", "critico"]] }
+  { n: "L1", name: "Identidade", q: "senha", idea: "Quem pode entrar e como.", tech: [
+    ["Gerenciador de senhas", "AES-256, senha única por serviço.", "essencial"],
+    ["Chave FIDO2 / passkey", "MFA que phishing não engana.", "reforcado"],
+    ["Privilégio mínimo", "Admin separado do uso diário.", "critico"]] },
+  { n: "L2", name: "Dispositivos", q: "software", idea: "Perdeu o aparelho, os dados continuam seus.", tech: [
+    ["Criptografia de disco", "BitLocker, FileVault, LUKS.", "essencial"],
+    ["Atualização automática", "Fecha falhas já conhecidas.", "essencial"],
+    ["EDR + MDM", "Detecção, bloqueio e apagamento remoto.", "reforcado"]] },
+  { n: "L3", name: "Comunicação", q: "treinamento", idea: "Só quem conversa lê.", tech: [
+    ["Criptografia ponta a ponta", "Protocolo Signal.", "essencial"],
+    ["SPF, DKIM, DMARC", "Ninguém envia e-mail em seu nome.", "reforcado"],
+    ["Rede segmentada + varredura de RF", "VLANs, 802.1X, salas limpas.", "critico"]] },
+  { n: "L4", name: "Físico", q: "câmera", idea: "Quem entra no prédio passa por cima do resto.", tech: [
+    ["Alarme + pânico silencioso", "IP + 4G, com localização.", "essencial"],
+    ["Acesso com cartão cifrado", "DESFire EV3. Não clona.", "reforcado"],
+    ["CFTV com gravação cifrada", "Rede isolada, sem porta aberta.", "reforcado"]] },
+  { n: "L5", name: "Pessoas", q: "proteção", idea: "O golpe mira quem opera.", tech: [
+    ["Treinamento antiphishing", "Simulações com métrica.", "essencial"],
+    ["Diagnóstico OSINT", "O que já está público sobre você.", "reforcado"],
+    ["Red Team + proteção executiva", "Teste real e operador em campo.", "critico"]] }
 ];
 
 /* ---------------- Dados de exemplo ---------------- */
@@ -510,7 +510,7 @@ function header() {
   const u = me(), st = myStore(), n = S.cart.reduce((s, l) => s + l.q, 0), h = location.hash.slice(1);
   return `<header class="top"><div class="wrap"><div class="top__bar">
     <a href="#inicio" class="brand" aria-label="Início">${LOGO}<span>SECURE<b>PRIVACY</b></span><em>MARKET</em></a>
-    <form class="search" role="search" data-form="search"><label for="q-top" class="sr">Buscar</label><input id="q-top" name="q" placeholder="Buscar câmeras, pentest, consultores…" value="${esc(filt.q)}"><button type="submit" aria-label="Buscar">${icon("search", 16)}</button></form>
+    <form class="search" role="search" data-form="search"><label for="q-top" class="sr">Buscar</label><input id="q-top" name="q" placeholder="Buscar" value="${esc(filt.q)}"><button type="submit" aria-label="Buscar">${icon("search", 16)}</button></form>
     <nav class="top__nav" aria-label="Conta">
       ${st ? `<a href="#painel" class="hide-sm">${icon("store", 16)}Painel</a>` : ""}
       ${u?.role === "ADMIN" ? `<a href="#admin" class="hide-sm">Admin</a>` : ""}
@@ -522,11 +522,11 @@ function header() {
   </div></header>`;
 }
 const footer = () => `<footer class="foot"><div class="wrap"><div class="foot__in">
-  <div><a href="#inicio" class="brand">${LOGO}<span>SECURE<b>PRIVACY</b></span></a><p style="margin-top:14px;max-width:320px">Proteção em camadas: equipamentos, software, serviços e especialistas verificados.</p></div>
+  <div><a href="#inicio" class="brand">${LOGO}<span>SECURE<b>PRIVACY</b></span></a><p style="margin-top:14px">Proteção em camadas.</p></div>
   <div><h5>Comprar</h5>${TK.map(t => `<a href="#explorar" data-type="${t}">${TYPES[t].label}</a>`).join("")}</div>
   <div><h5>Vender</h5><a href="#vender">Cadastrar minha loja</a><a href="#painel">Painel do vendedor</a><a href="#politica">Regras de curadoria</a></div>
   <div><h5>Demonstração</h5><a href="#entrar">Trocar de conta</a><button type="button" class="linkbtn" data-act="reset">Reiniciar dados de exemplo</button></div>
-  </div><p class="foot__legal mono">Demonstração navegável · os dados ficam só neste navegador · pagamentos simulados</p></div></footer>`;
+  </div><p class="foot__legal mono">Demonstração · dados só neste navegador</p></div></footer>`;
 
 /* ---------------- Páginas ---------------- */
 const V = {};
@@ -534,34 +534,32 @@ const V = {};
 V.inicio = () => {
   const L = S.listings.filter(live), n = t => L.filter(l => l.type === t).length;
   return `<section class="hero"><div class="wrap hero__in"><div>
-    <span class="eyebrow">Proteção em camadas</span>
-    <h1>Proteção em camadas. <span>Para o nível de segurança que você precisa.</span></h1>
-    <p>Defesa em profundidade aplicada a cinco camadas: identidade, endpoints, comunicação, perímetro físico e pessoas. Equipamentos, software, serviços e especialistas verificados, organizados pelo nível de ameaça que você precisa cobrir.</p>
+    <h1>Proteção em camadas. <span>No nível que você precisa.</span></h1>
+    <p>Equipamentos, software, serviços e especialistas verificados.</p>
     <form class="hero__search" role="search" data-form="search"><label for="q-hero" class="sr">O que você precisa proteger?</label><input id="q-hero" name="q" placeholder="O que você precisa proteger?"><button class="btn btn--primary" type="submit">Buscar ${icon("arrow", 16)}</button></form>
     <div class="row" style="margin-top:18px"><a href="#vender" class="btn btn--ghost">${icon("store", 16)} Anunciar produto ou serviço</a></div>
     <div class="hero__tags">${["pentest","câmera","FIDO2","LGPD","pânico","proteção executiva"].map(t => `<a href="#explorar" data-search="${t}">${t}</a>`).join("")}</div>
   </div><div class="trustbox">
-    <div>${icon("shield")}<p><b>Vendedores verificados</b><span>${S.stores.filter(s => s.verified && s.status === "APPROVED").length} lojas e profissionais com documentos e credenciais conferidos.</span></p></div>
-    <div>${icon("eye")}<p><b>Curadoria de cada anúncio</b><span>Itens de venda proibida ou restrita não entram no catálogo.</span></p></div>
-    <div>${icon("lock")}<p><b>Pagamento protegido</b><span>O valor só é repassado ao vendedor depois da entrega confirmada.</span></p></div>
+    <div>${icon("shield")}<p><b>Vendedores verificados</b><span>Documento e credencial conferidos.</span></p></div>
+    <div>${icon("eye")}<p><b>Anúncios revisados</b><span>Item proibido não entra.</span></p></div>
+    <div>${icon("lock")}<p><b>Pagamento protegido</b><span>Vendedor recebe após a entrega.</span></p></div>
   </div></div></section>
-  <section class="section"><div class="wrap"><div class="head"><div><span class="eyebrow">Escolha o seu nível</span><h2>Controles por camada e por nível de ameaça</h2></div><a href="#camadas" class="link">Entender as camadas →</a></div>${layers(true)}</div></section>
-  <section class="section" style="padding-top:0"><div class="wrap creed"><blockquote>Privacidade não é algo que se esconde. É uma condição para decidir com liberdade.</blockquote><div class="creed__body"><p>Nenhum controle isolado é suficiente, e nenhum ambiente é igual a outro. Uma camada compensa a falha da anterior. O objetivo não é tornar a invasão impossível, é torná-la cara, lenta e detectável.</p><p>Este marketplace reúne o que compõe cada camada, com especificações claras e vendedores verificados. Sem alarmismo: quem melhor conhece o próprio modelo de ameaça é você. A decisão continua sendo sua.</p></div></div></section>
-  <section class="section" style="padding-top:0"><div class="wrap"><div class="head"><h2>Por onde você quer começar?</h2></div><div class="types">${TK.map(t => `<a href="#explorar" data-type="${t}" class="type"><span class="n">${n(t)} ofertas</span>${icon(TYPE_ICON[t])}<h3>${TYPES[t].label}</h3><p>${TYPES[t].desc}</p></a>`).join("")}</div></div></section>
-  <section class="section" style="padding-top:0"><div class="wrap"><div class="head"><div><span class="eyebrow">Selecionados</span><h2>Destaques da curadoria</h2></div><a href="#explorar" class="link" data-type="">Ver tudo →</a></div>${grid(L.filter(l => l.featured).slice(0, 8))}</div></section>
-  <section class="section" style="padding-top:0"><div class="wrap"><div class="sellcta"><div><span class="eyebrow">Para vendedores</span><h2>Venda equipamentos, software, serviços ou horas técnicas.</h2><p class="dim">Empresas (CNPJ) e profissionais independentes (CPF/MEI). Cadastro em três etapas: conta, dados da loja para verificação e anúncios. Cada anúncio passa por curadoria antes de ir ao ar.</p><a href="#vender" class="btn btn--primary">Cadastrar minha loja ${icon("arrow", 16)}</a></div><ul><li>Selo de vendedor verificado</li><li>Recebimento com divisão automática do pagamento</li><li>Pedidos de orçamento para serviços sob medida</li><li>Painel com vendas, estoque e solicitações</li></ul></div></div></section>`;
+  <section class="section"><div class="wrap"><div class="head"><div><h2>Escolha o nível</h2></div><a href="#camadas" class="link">Ver detalhes →</a></div>${layers(true)}</div></section>
+  <section class="section" style="padding-top:0"><div class="wrap"><div class="head"><h2>Categorias</h2></div><div class="types">${TK.map(t => `<a href="#explorar" data-type="${t}" class="type"><span class="n">${n(t)} ofertas</span>${icon(TYPE_ICON[t])}<h3>${TYPES[t].label}</h3><p>${TYPES[t].desc}</p></a>`).join("")}</div></div></section>
+  <section class="section" style="padding-top:0"><div class="wrap"><div class="head"><div><h2>Destaques</h2></div><a href="#explorar" class="link" data-type="">Ver tudo →</a></div>${grid(L.filter(l => l.featured).slice(0, 8))}</div></section>
+  <section class="section" style="padding-top:0"><div class="wrap"><div class="sellcta"><div><h2>Venda aqui.</h2><p class="dim">Empresa ou profissional. Cadastro em 3 etapas.</p><a href="#vender" class="btn btn--primary">Cadastrar loja ${icon("arrow", 16)}</a></div><ul><li>Selo de verificado</li><li>Pagamento dividido automático</li><li>Orçamentos no painel</li><li>Vendas e estoque em um lugar</li></ul></div></div></section>`;
 };
 
-V.camadas = () => `<section class="hero"><div class="wrap" style="max-width:900px"><span class="eyebrow">Proteção em camadas</span><h1>Para o nível de segurança <span>que você precisa.</span></h1><p style="max-width:700px">Defesa em profundidade: cinco camadas de controle — identidade e acesso, endpoints, comunicação e rede, perímetro físico, pessoas e processos. Cada uma reduz a probabilidade ou o impacto do que passou pela anterior. Juntas, elevam o custo do ataque e encurtam o tempo até a detecção.</p></div></section>
-  <section class="section"><div class="wrap"><div class="head"><div><span class="eyebrow">Escolha o seu nível</span><h2>Controles e tecnologias por camada</h2></div></div>${layers(false)}</div></section>
-  <section class="section" style="padding-top:0"><div class="wrap" style="max-width:900px"><span class="eyebrow">Princípios</span><h2 style="font-size:clamp(24px,2.8vw,34px);margin-bottom:24px">Princípios de arquitetura</h2><ol class="stackl">${[
-    ["Defesa em profundidade","Controles sobrepostos e independentes. A falha de um não compromete o ambiente inteiro."],
-    ["Modelo de ameaça primeiro","Quem é o adversário provável, o que ele quer e qual capacidade tem. A escolha dos controles decorre disso, não de tendência."],
-    ["Proporcionalidade","Controles acima do necessário geram atrito e acabam contornados. O nível certo é o que se sustenta na operação."],
-    ["Padrões abertos e verificáveis","Criptografia pública e auditada, protocolos documentados, testes independentes. Segurança por obscuridade não é controle."],
-    ["Assumir a violação","Projetar para detectar, conter e recuperar. Registro, segmentação e resposta importam tanto quanto prevenção."]
-  ].map(([t, d], i) => `<li class="stackl__row principle"><span class="mono" style="color:var(--signal)">0${i + 1}</span><div><h3 style="font-size:19px;margin-bottom:6px">${t}</h3><p class="dim" style="margin:0">${d}</p></div></li>`).join("")}</ol></div></section>
-  <section class="section" style="padding-top:0"><div class="wrap creed" style="max-width:1000px"><blockquote>Proteção não é medo. É reduzir o que está fora do seu controle.</blockquote><div class="creed__body"><p>Privacidade é o que permite pensar, conversar e trabalhar sem exposição desnecessária. Protegê-la é uma decisão técnica, não um sinal de culpa.</p><p>Se ainda não tem um modelo de ameaça definido, um especialista pode ajudar a montá-lo. Se já tem, os controles estão organizados por camada.</p><div class="row" style="margin-top:8px"><a class="btn btn--primary" href="#explorar" data-type="">Explorar as opções</a><a class="btn btn--ghost" href="#explorar" data-type="PROFESSIONAL">Falar com um especialista</a></div></div></div></section>`;
+V.camadas = () => `<section class="hero"><div class="wrap" style="max-width:900px"><span class="eyebrow">Proteção em camadas</span><h1>5 camadas. <span>3 níveis.</span></h1><p>Uma camada cobre a falha da outra. Escolha o nível e veja o que entra.</p></div></section>
+  <section class="section"><div class="wrap">${layers(false)}</div></section>
+  <section class="section" style="padding-top:0"><div class="wrap" style="max-width:900px"><h2 style="font-size:clamp(24px,2.8vw,32px);margin-bottom:20px">Princípios</h2><ol class="stackl">${[
+    ["Camadas independentes","Uma falha não derruba tudo."],
+    ["Ameaça antes de produto","Defina o risco, depois o controle."],
+    ["Proporção","Proteção que atrapalha é abandonada."],
+    ["Padrão aberto","Criptografia auditada. Nada de caixa-preta."],
+    ["Assuma a invasão","Detectar e conter importa tanto quanto prevenir."]
+  ].map(([t, d], i) => `<li class="stackl__row principle"><span class="mono" style="color:var(--signal)">0${i + 1}</span><div><h3 style="font-size:18px;margin-bottom:4px">${t}</h3><p class="dim" style="margin:0">${d}</p></div></li>`).join("")}</ol>
+  <div class="row" style="margin-top:28px"><a class="btn btn--primary" href="#explorar" data-type="">Ver produtos</a><a class="btn btn--ghost" href="#explorar" data-type="PROFESSIONAL">Falar com especialista</a></div></div></section>`;
 
 V.explorar = () => {
   const q = filt.q.trim().toLowerCase();
@@ -592,11 +590,11 @@ V.produto = slug => {
     <div><h2 class="h-sm">Avaliações</h2>${l.reviews.length ? stars(l) : `<p class="muted">Ainda sem avaliações.</p>`}${l.reviews.map(r => `<div class="review"><div class="row between"><b>${esc(r.name)}</b><span class="stars">${"★".repeat(r.r)}${"☆".repeat(5 - r.r)}</span></div><p class="dim" style="margin:6px 0 0">${esc(r.c)}</p></div>`).join("")}
     ${bought && !l.reviews.some(r => r.uid === u.id) ? `<form class="form card" style="margin-top:18px" data-form="review" data-id="${l.id}"><b>Avaliar sua compra</b><div class="choice">${[5,4,3,2,1].map(n => `<label><input type="radio" name="r" value="${n}" ${n === 5 ? "checked" : ""}><span>${"★".repeat(n)}</span></label>`).join("")}</div><label class="field"><span>Comentário</span><textarea id="rv-c" name="c" rows="3" required></textarea></label><button class="btn btn--ghost" type="submit">Publicar avaliação</button></form>` : ""}</div>
   </div><div class="stack"><span class="eyebrow">${esc(catOf(l).name)}</span><h1 class="page-title" style="font-size:clamp(26px,3vw,36px)">${esc(l.title)}</h1><p class="dim" style="font-size:17px">${esc(l.summary)}</p>${flashBox()}
-    <div class="buybox">${quote ? `<div class="big">${price(l)}</div><p class="dim" style="margin:0">Este ${phys ? "item" : "serviço"} é dimensionado conforme o seu cenário. Descreva o que precisa e o vendedor responde com uma proposta.</p>
-      ${u ? `<form class="form" data-form="quote" data-id="${l.id}"><label class="field"><span>Empresa (opcional)</span><input id="qt-co" name="co"></label><label class="field"><span>O que você precisa?</span><textarea id="qt-msg" name="msg" rows="4" placeholder="Escopo, prazos, local, quantidade de pessoas ou ativos…" required></textarea></label><button class="btn btn--primary btn--block" type="submit">Solicitar orçamento</button></form>` : `<a class="btn btn--primary btn--block" href="#entrar">Entrar para solicitar orçamento</a>`}`
+    <div class="buybox">${quote ? `<div class="big">${price(l)}</div><p class="dim" style="margin:0">Descreva o que precisa. O vendedor envia a proposta.</p>
+      ${u ? `<form class="form" data-form="quote" data-id="${l.id}"><label class="field"><span>Empresa (opcional)</span><input id="qt-co" name="co"></label><label class="field"><span>O que você precisa?</span><textarea id="qt-msg" name="msg" rows="4" placeholder="Escopo, prazo, local" required></textarea></label><button class="btn btn--primary btn--block" type="submit">Solicitar orçamento</button></form>` : `<a class="btn btn--primary btn--block" href="#entrar">Entrar para solicitar orçamento</a>`}`
     : `<div class="big">${money(l.price)}${l.unit !== "un" ? `<small> / ${l.unit}</small>` : ""}</div>${phys ? `<span class="pill ${l.stock ? "pill--ok" : "pill--bad"}">${l.stock ? l.stock + " em estoque" : "Sem estoque"}</span>` : ""}
       <form class="row" data-form="add" data-id="${l.id}"><label class="sr" for="qty">Quantidade</label><input id="qty" class="input qty" type="number" name="q" min="1" max="${phys ? Math.max(1, l.stock || 1) : 99}" value="1"><button class="btn btn--primary" style="flex:1" type="submit" ${phys && !l.stock ? "disabled" : ""}>${icon("cart", 16)} Adicionar ao carrinho</button></form>`}
-      <p class="mono muted" style="margin:0">Pagamento protegido · repasse ao vendedor após confirmação</p></div>
+      <p class="mono muted" style="margin:0">Pagamento protegido</p></div>
     <a href="#loja-${s.slug}" class="sellerbox"><span class="avatar">${esc(s.name[0])}</span><span style="flex:1"><b>${esc(s.name)}</b> ${verified(s)}<br><small class="muted">${s.kind === "PROFISSIONAL" ? "Profissional independente" : "Empresa"} · ${esc(s.city)}</small></span>${icon("arrow", 16)}</a>
   </div></div>${related.length ? `<div style="margin-top:64px"><div class="head"><h2>Na mesma categoria</h2></div>${grid(related)}</div>` : ""}</div>`;
 };
@@ -612,9 +610,9 @@ const cartItems = () => S.cart.map(c => ({ l: S.listings.find(x => x.id === c.id
 
 V.carrinho = () => {
   const it = cartItems(), tot = it.reduce((s, i) => s + i.sub, 0);
-  return `<div class="wrap section"><h1 class="page-title">Carrinho</h1>${flashBox()}${!it.length ? `<div class="empty" style="margin-top:24px"><h3>Seu carrinho está vazio</h3><p>Serviços sob orçamento são solicitados direto na página do anúncio.</p><a href="#explorar" data-type="" class="btn btn--primary">Explorar o marketplace</a></div>` :
+  return `<div class="wrap section"><h1 class="page-title">Carrinho</h1>${flashBox()}${!it.length ? `<div class="empty" style="margin-top:24px"><h3>Seu carrinho está vazio</h3><a href="#explorar" data-type="" class="btn btn--primary">Explorar o marketplace</a></div>` :
   `<div class="cart" style="margin-top:24px"><div>${it.map(({ l, q, sub }) => `<div class="line"><a href="#produto-${l.slug}">${visual(l)}</a><div style="min-width:0"><a href="#produto-${l.slug}"><b>${esc(l.title)}</b></a><div class="muted" style="font-size:13px">${esc(storeOf(l).name)} · ${price(l)}</div><div class="row" style="margin-top:8px"><label class="sr" for="cq-${l.id}">Quantidade</label><input id="cq-${l.id}" class="input qty" type="number" min="1" max="${l.stock ?? 99}" value="${q}" data-cartq="${l.id}"><button type="button" class="btn btn--sm" data-cartrm="${l.id}">Remover</button></div></div><b class="num">${money(sub)}</b></div>`).join("")}</div>
-  <aside class="card summary"><dl><dt>Itens</dt><dd>${it.reduce((s, i) => s + i.q, 0)}</dd><dt>Vendedores</dt><dd>${new Set(it.map(i => i.l.store)).size}</dd><dt>Frete</dt><dd>Combinado com o vendedor</dd><dt class="total">Total</dt><dd class="total">${money(tot)}</dd></dl><a href="#checkout" class="btn btn--primary btn--block">Finalizar compra</a><p class="muted" style="font-size:12.5px;margin-top:12px">Um único pagamento. O valor de cada vendedor é separado automaticamente.</p></aside></div>`}</div>`;
+  <aside class="card summary"><dl><dt>Itens</dt><dd>${it.reduce((s, i) => s + i.q, 0)}</dd><dt>Vendedores</dt><dd>${new Set(it.map(i => i.l.store)).size}</dd><dt>Frete</dt><dd>Combinado com o vendedor</dd><dt class="total">Total</dt><dd class="total">${money(tot)}</dd></dl><a href="#checkout" class="btn btn--primary btn--block">Finalizar compra</a></aside></div>`}</div>`;
 };
 
 V.checkout = () => {
@@ -631,14 +629,14 @@ V.checkout = () => {
 V.pedido = code => {
   const o = S.orders.find(x => x.code === code && x.buyer === S.me); if (!o) return V.naoencontrado();
   return `<div class="wrap section" style="max-width:880px"><span class="eyebrow">Pedido ${o.code}</span><div class="row between"><h1 class="page-title">${o.status === "PENDING_PAYMENT" ? "Pedido recebido" : "Pedido " + ORDER_ST[o.status][0].toLowerCase()}</h1>${pill(ORDER_ST[o.status])}</div>${flashBox()}<p class="dim">Feito em ${o.date} · ${o.method}</p>
-  ${o.status === "PENDING_PAYMENT" ? `<div class="card stack" style="margin:20px 0"><b>Aguardando pagamento de ${money(o.total)}</b><p class="dim" style="margin:0">Demonstração: nenhum valor real é cobrado.</p><div><button type="button" class="btn btn--primary" data-pay="${o.code}">Confirmar pagamento (simulação)</button></div></div>` : ""}
+  ${o.status === "PENDING_PAYMENT" ? `<div class="card stack" style="margin:20px 0"><b>Aguardando pagamento de ${money(o.total)}</b><div><button type="button" class="btn btn--primary" data-pay="${o.code}">Confirmar pagamento (simulação)</button></div></div>` : ""}
   <div class="table-wrap" style="margin-top:20px"><table class="table"><thead><tr><th>Item</th><th>Vendedor</th><th>Entrega</th><th class="num">Qtd.</th><th class="num">Total</th></tr></thead><tbody>${o.items.map(i => `<tr><td>${esc(i.title)}</td><td>${esc(S.stores.find(s => s.id === i.store).name)}</td><td>${i.ful === "PENDING" ? "Preparando" : i.ful === "SHIPPED" ? "Enviado" + (i.track ? " · " + esc(i.track) : "") : "Entregue"}</td><td class="num">${i.q}</td><td class="num">${money(i.unit * i.q)}</td></tr>`).join("")}</tbody></table></div>
   <p style="text-align:right;font-size:20px;font-weight:600;margin-top:14px">Total ${money(o.total)}</p><p class="muted">Entrega: ${esc(o.ship)}</p>
-  ${["PAID","SHIPPED"].includes(o.status) ? `<div class="card row between" style="margin-top:20px"><span class="dim">Recebeu tudo certo? Confirmar libera o repasse aos vendedores.</span><button type="button" class="btn btn--ghost" data-received="${o.code}">Confirmar recebimento</button></div>` : ""}
+  ${["PAID","SHIPPED"].includes(o.status) ? `<div class="card row between" style="margin-top:20px"><span class="dim">Recebeu?</span><button type="button" class="btn btn--ghost" data-received="${o.code}">Confirmar recebimento</button></div>` : ""}
   <p style="margin-top:24px"><a class="link" href="#conta">← Meus pedidos</a></p></div>`;
 };
 
-V.entrar = next => `<div class="wrap"><div class="auth card"><h1 class="page-title">Entrar</h1>${flashBox()}<p class="dim">Nesta demonstração, escolha uma conta de exemplo ou crie a sua.</p>
+V.entrar = next => `<div class="wrap"><div class="auth card"><h1 class="page-title">Entrar</h1>${flashBox()}<p class="dim">Escolha uma conta de teste.</p>
   <div class="stack" style="gap:10px">${[["cliente","Cliente","compra produtos e pede orçamentos"],["sp","Secure Privacy","vendedor: painel, vendas e orçamentos"],["vt","Vértice Equipamentos","vendedor de equipamentos"],["admin","Administrador","aprova lojas e anúncios"]].map(([id, n, d]) => `<button type="button" class="acct" data-login="${id}" data-next="${next || ""}"><span class="avatar">${n[0]}</span><span><b>${n}</b><small>${d}</small></span>${icon("arrow", 16)}</button>`).join("")}</div>
   <p class="dim" style="margin-top:20px">Ainda não tem conta? <a class="link" href="#vender">Criar conta de vendedor</a> ou <a class="link" href="#cadastrar">conta de comprador</a>.</p></div></div>`;
 
@@ -646,14 +644,13 @@ V.cadastrar = () => `<div class="wrap"><div class="auth card"><h1 class="page-ti
 
 V.vender = () => {
   const u = me(); if (myStore()) return V.painel();
-  return `<div class="wrap section"><div class="product"><div><span class="eyebrow">Para vendedores</span><h1 class="page-title">Cadastre sua loja e anuncie.</h1><p class="dim" style="font-size:17px">Empresas e profissionais independentes podem anunciar equipamentos, serviços, produtos digitais e horas técnicas. Cada vendedor passa por verificação antes de publicar.</p>
-  <div class="steps"><div class="${!u ? "on" : ""}"><span class="mono">ETAPA 1</span><b>Conta</b><small>Nome, e-mail e senha</small></div><div class="${u ? "on" : ""}"><span class="mono">ETAPA 2</span><b>Dados da loja</b><small>CPF/CNPJ, cidade e credenciais</small></div><div><span class="mono">ETAPA 3</span><b>Anúncios</b><small>Produtos e serviços no painel</small></div></div>
-  <div class="stack">${[["shield","Selo de verificado","Documentos e credenciais conferidos aumentam a confiança de quem compra."],["bolt","Recebimento automático","O pagamento é dividido na hora: sua parte vai para você, a comissão para a plataforma."],["doc","Orçamentos sob medida","Serviços complexos recebem pedidos de orçamento direto no seu painel."],["store","Painel completo","Anúncios, estoque, vendas, envios e solicitações em um só lugar."]].map(([i, t, d]) => `<div class="row" style="align-items:flex-start;flex-wrap:nowrap"><span class="avatar">${icon(i)}</span><div><b>${t}</b><p class="dim" style="margin:0;font-size:14px">${d}</p></div></div>`).join("")}</div></div>
+  return `<div class="wrap section"><div class="product"><div><span class="eyebrow">Para vendedores</span><h1 class="page-title">Cadastre sua loja.</h1><p class="dim" style="font-size:17px">Produtos, serviços, software ou horas técnicas.</p>
+  <div class="steps"><div class="${!u ? "on" : ""}"><span class="mono">ETAPA 1</span><b>Conta</b><small>Nome, e-mail e senha</small></div><div class="${u ? "on" : ""}"><span class="mono">ETAPA 2</span><b>Dados da loja</b><small>CPF/CNPJ, cidade e credenciais</small></div><div><span class="mono">ETAPA 3</span><b>Anúncios</b><small>Produtos e serviços no painel</small></div></div></div>
   <div class="card">${!u ? `<form class="form" data-form="signup" data-next="vender"><h2 class="h-md">Etapa 1 · Criar sua conta</h2>${flashBox()}<label class="field"><span>Nome do responsável</span><input id="v-n" name="n" autocomplete="name" required></label><label class="field"><span>E-mail</span><input id="v-e" name="e" type="email" required></label><label class="field"><span>Senha</span><input id="v-p" name="p" type="password" minlength="8" required><small>Mínimo de 8 caracteres.</small></label><button class="btn btn--primary btn--block" type="submit">Continuar para dados da loja</button><p class="dim" style="margin:0;font-size:14px">Já tem conta? <a class="link" href="#entrar">Entrar</a></p></form>`
   : `<form class="form" data-form="store"><h2 class="h-md">Etapa 2 · Dados da loja</h2>${flashBox()}<div class="choice"><label><input type="radio" name="kind" value="EMPRESA" checked><span>Empresa (CNPJ)</span></label><label><input type="radio" name="kind" value="PROFISSIONAL"><span>Profissional (CPF ou MEI)</span></label></div>
     <label class="field"><span>Nome da loja ou nome profissional</span><input id="st-n" name="name" required></label><div class="form-row"><label class="field"><span>CPF ou CNPJ</span><input id="st-d" name="doc" inputmode="numeric" required></label><label class="field"><span>Cidade / UF</span><input id="st-c" name="city" required></label></div>
-    <label class="field"><span>Sobre você ou sua empresa</span><textarea id="st-b" name="bio" rows="4" required></textarea></label><label class="field"><span>Certificações e registros</span><input id="st-cr" name="cred" placeholder="Ex.: OSCP, ISO 27001 LI, autorização da Polícia Federal"><small>Serviços de segurança privada exigem autorização da Polícia Federal.</small></label>
-    <label class="row" style="flex-wrap:nowrap;align-items:flex-start;font-size:14px"><input id="st-t" type="checkbox" name="terms" style="margin-top:4px"><span class="dim">Li e aceito as <a class="link" href="#politica">regras de curadoria e a lista de itens proibidos</a>.</span></label><button class="btn btn--primary btn--block" type="submit">Enviar para análise</button></form>`}</div></div></div>`;
+    <label class="field"><span>O que você faz</span><textarea id="st-b" name="bio" rows="4" required></textarea></label><label class="field"><span>Certificações e registros</span><input id="st-cr" name="cred" placeholder="OSCP, ISO 27001, autorização PF"><small>Segurança privada exige autorização da PF.</small></label>
+    <label class="row" style="flex-wrap:nowrap;align-items:flex-start;font-size:14px"><input id="st-t" type="checkbox" name="terms" style="margin-top:4px"><span class="dim">Aceito as <a class="link" href="#politica">regras</a>.</span></label><button class="btn btn--primary btn--block" type="submit">Enviar para análise</button></form>`}</div></div></div>`;
 };
 
 const dash = (side, body) => `<div class="wrap dash"><nav class="side" aria-label="Painel">${side}</nav><div style="min-width:0">${body}</div></div>`;
@@ -665,10 +662,10 @@ V.painel = () => {
   const n = needSeller(); if (n) return n; const st = myStore();
   const paid = myItems(st).filter(i => i.o.status !== "PENDING_PAYMENT");
   return dash(sellerSide(st), `<span class="eyebrow">Painel do vendedor</span><h1 class="page-title">${esc(st.name)}</h1>${flashBox()}
-  ${st.status === "PENDING" ? `<div class="alert alert--info row between"><span>Loja em verificação. Etapa 3: cadastre seus produtos e serviços. Eles ficam públicos depois da aprovação.</span><a class="btn btn--primary btn--sm" href="#novo-anuncio">Cadastrar anúncio</a></div>` : ""}
+  ${st.status === "PENDING" ? `<div class="alert alert--info row between"><span>Loja em análise. Já pode cadastrar anúncios.</span><a class="btn btn--primary btn--sm" href="#novo-anuncio">Cadastrar anúncio</a></div>` : ""}
   <div class="kpis" style="margin-top:20px"><div class="kpi"><span>A receber (líquido)</span><b>${money(paid.reduce((s, i) => s + i.net, 0))}</b></div><div class="kpi"><span>Itens vendidos</span><b>${paid.reduce((s, i) => s + i.q, 0)}</b></div><div class="kpi"><span>Para enviar</span><b>${paid.filter(i => i.ful === "PENDING").length}</b></div><div class="kpi"><span>Orçamentos abertos</span><b>${S.quotes.filter(q => q.store === st.id && !q.reply).length}</b></div></div>
   <div class="row" style="margin-bottom:28px"><a class="btn btn--primary" href="#novo-anuncio">Novo anúncio</a><a class="btn btn--ghost" href="#painel-anuncios">${S.listings.filter(l => l.store === st.id && l.status === "ACTIVE").length} anúncios publicados</a><span class="muted" style="font-size:13px">Comissão da plataforma: ${(st.rate * 100).toFixed(0)}%</span></div>
-  <h2 class="h-sm">Vendas recentes</h2>${paid.length ? `<div class="table-wrap"><table class="table"><thead><tr><th>Pedido</th><th>Item</th><th>Data</th><th class="num">Líquido</th></tr></thead><tbody>${paid.slice(-6).reverse().map(i => `<tr><td class="mono">${i.o.code}</td><td>${i.q}× ${esc(i.title)}</td><td>${i.o.date}</td><td class="num">${money(i.net)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">Nenhuma venda ainda. Dica: entre como Cliente, compre um item desta loja e volte aqui.</p>`}`);
+  <h2 class="h-sm">Vendas recentes</h2>${paid.length ? `<div class="table-wrap"><table class="table"><thead><tr><th>Pedido</th><th>Item</th><th>Data</th><th class="num">Líquido</th></tr></thead><tbody>${paid.slice(-6).reverse().map(i => `<tr><td class="mono">${i.o.code}</td><td>${i.q}× ${esc(i.title)}</td><td>${i.o.date}</td><td class="num">${money(i.net)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">Nenhuma venda ainda.</p>`}`);
 };
 
 V["painel-anuncios"] = () => {
@@ -680,25 +677,25 @@ V["painel-anuncios"] = () => {
 const listingForm = l => `<form class="form card" data-form="listing" data-id="${l ? l.id : ""}">${flashBox()}
   <label class="field"><span>Categoria</span><select id="lf-cat" name="cat" required><option value="" ${!l ? "selected" : ""} disabled>Escolha…</option>${TK.map(t => `<optgroup label="${TYPES[t].label}">${CATS.filter(c => c.type === t).map(c => `<option value="${c.id}" ${l?.cat === c.id ? "selected" : ""}>${c.name}</option>`).join("")}</optgroup>`).join("")}</select></label>
   <label class="field"><span>Título</span><input id="lf-t" name="title" maxlength="120" value="${esc(l?.title || "")}" required></label>
-  <label class="field"><span>Resumo</span><input id="lf-s" name="summary" maxlength="200" value="${esc(l?.summary || "")}" required><small>Uma frase que aparece no topo do anúncio.</small></label>
+  <label class="field"><span>Resumo</span><input id="lf-s" name="summary" maxlength="200" value="${esc(l?.summary || "")}" required></label>
   <label class="field"><span>Descrição completa</span><textarea id="lf-d" name="desc" rows="5">${esc(l?.desc || "")}</textarea></label>
-  <div class="form-row"><label class="field"><span>Preço (R$)</span><input id="lf-p" name="price" inputmode="decimal" placeholder="Ex.: 1.299,90" value="${l?.price ? (l.price / 100).toFixed(2).replace(".", ",") : ""}"><small>Com “sob orçamento”, vira “a partir de”.</small></label>
+  <div class="form-row"><label class="field"><span>Preço (R$)</span><input id="lf-p" name="price" inputmode="decimal" placeholder="Ex.: 1.299,90" value="${l?.price ? (l.price / 100).toFixed(2).replace(".", ",") : ""}"></label>
   <label class="field"><span>Cobrança por</span><select id="lf-u" name="unit">${["un","hora","dia","projeto","mês","ano","licença","usuário"].map(u => `<option value="${u}" ${(l?.unit || "un") === u ? "selected" : ""}>${u === "un" ? "unidade" : u}</option>`).join("")}</select></label></div>
-  <div class="form-row"><label class="field"><span>Estoque</span><input id="lf-st" name="stock" type="number" min="0" value="${l?.stock ?? ""}"><small>Só para equipamentos físicos.</small></label><label class="row" style="align-self:center;font-size:14px"><input id="lf-q" type="checkbox" name="quote" ${l?.quote ? "checked" : ""}> Sob orçamento (o cliente solicita uma proposta)</label></div>
+  <div class="form-row"><label class="field"><span>Estoque</span><input id="lf-st" name="stock" type="number" min="0" value="${l?.stock ?? ""}"><small>Só equipamento.</small></label><label class="row" style="align-self:center;font-size:14px"><input id="lf-q" type="checkbox" name="quote" ${l?.quote ? "checked" : ""}> Sob orçamento</label></div>
   <label class="field"><span>Especificações</span><textarea id="lf-sp" name="specs" rows="5" placeholder="Uma por linha, no formato Nome: Valor&#10;Resolução: 4K&#10;Garantia: 2 anos">${esc((l?.specs || []).map(([k, v]) => k + ": " + v).join("\n"))}</textarea></label>
-  <p class="alert alert--info" style="margin:0">Ao salvar, o anúncio vai para a curadoria e fica público após aprovação.</p>
+  <p class="muted" style="margin:0;font-size:13px">Publicado após aprovação.</p>
   <button class="btn btn--primary" type="submit">${l ? "Salvar e enviar para análise" : "Enviar para análise"}</button></form>`;
 V["novo-anuncio"] = () => { const n = needSeller(); if (n) return n; return dash(sellerSide(myStore()), `<h1 class="page-title">Novo anúncio</h1><div style="margin-top:16px">${listingForm(null)}</div>`); };
 V.editar = id => { const n = needSeller(); if (n) return n; const l = S.listings.find(x => x.id === id && x.store === myStore().id); if (!l) return V.naoencontrado(); return dash(sellerSide(myStore()), `<h1 class="page-title">Editar anúncio</h1><div style="margin-top:16px">${listingForm(l)}</div>`); };
 
 V["painel-vendas"] = () => {
   const n = needSeller(); if (n) return n; const st = myStore(), it = myItems(st).reverse();
-  return dash(sellerSide(st), `<h1 class="page-title">Vendas</h1><p class="dim">O valor líquido já desconta a comissão da plataforma.</p>${it.length ? `<div class="table-wrap" style="margin-top:16px"><table class="table"><thead><tr><th>Pedido</th><th>Item</th><th>Status</th><th class="num">Bruto</th><th class="num">Comissão</th><th class="num">Líquido</th><th>Envio</th></tr></thead><tbody>${it.map(i => { const phys = S.listings.find(l => l.id === i.listing)?.type === "PHYSICAL"; return `<tr><td><span class="mono">${i.o.code}</span><br><small class="muted">${i.o.date}</small></td><td>${i.q}× ${esc(i.title)}</td><td>${pill(ORDER_ST[i.o.status])}</td><td class="num">${money(i.unit * i.q)}</td><td class="num muted">−${money(i.fee)}</td><td class="num"><b>${money(i.net)}</b></td><td>${i.o.status === "PAID" && i.ful === "PENDING" ? `<div class="row" style="flex-wrap:nowrap">${phys ? `<input class="input" id="tr-${i.id}" placeholder="Rastreio" style="width:120px;padding:6px 10px" aria-label="Código de rastreio">` : ""}<button type="button" class="btn btn--ghost btn--sm" data-ship="${i.id}" data-order="${i.o.code}">${phys ? "Enviar" : "Entregue"}</button></div>` : `<small class="muted">${i.o.status === "PENDING_PAYMENT" ? "Aguardando pagamento" : i.ful === "SHIPPED" ? "Enviado " + esc(i.track || "") : "Entregue"}</small>`}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted" style="margin-top:16px">Nenhuma venda ainda.</p>`}`);
+  return dash(sellerSide(st), `<h1 class="page-title">Vendas</h1>${it.length ? `<div class="table-wrap" style="margin-top:16px"><table class="table"><thead><tr><th>Pedido</th><th>Item</th><th>Status</th><th class="num">Bruto</th><th class="num">Comissão</th><th class="num">Líquido</th><th>Envio</th></tr></thead><tbody>${it.map(i => { const phys = S.listings.find(l => l.id === i.listing)?.type === "PHYSICAL"; return `<tr><td><span class="mono">${i.o.code}</span><br><small class="muted">${i.o.date}</small></td><td>${i.q}× ${esc(i.title)}</td><td>${pill(ORDER_ST[i.o.status])}</td><td class="num">${money(i.unit * i.q)}</td><td class="num muted">−${money(i.fee)}</td><td class="num"><b>${money(i.net)}</b></td><td>${i.o.status === "PAID" && i.ful === "PENDING" ? `<div class="row" style="flex-wrap:nowrap">${phys ? `<input class="input" id="tr-${i.id}" placeholder="Rastreio" style="width:120px;padding:6px 10px" aria-label="Código de rastreio">` : ""}<button type="button" class="btn btn--ghost btn--sm" data-ship="${i.id}" data-order="${i.o.code}">${phys ? "Enviar" : "Entregue"}</button></div>` : `<small class="muted">${i.o.status === "PENDING_PAYMENT" ? "Aguardando pagamento" : i.ful === "SHIPPED" ? "Enviado " + esc(i.track || "") : "Entregue"}</small>`}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted" style="margin-top:16px">Nenhuma venda ainda.</p>`}`);
 };
 
 V["painel-orcamentos"] = () => {
   const n = needSeller(); if (n) return n; const st = myStore(), qs = S.quotes.filter(q => q.store === st.id).reverse();
-  return dash(sellerSide(st), `<h1 class="page-title">Pedidos de orçamento</h1>${flashBox()}${qs.length ? `<div class="stack" style="margin-top:16px">${qs.map(q => `<div class="card stack" style="gap:10px"><div class="row between"><b>${esc(q.title)}</b>${pill(q.reply ? ["Respondido","ok"] : ["Aberto","warn"])}</div><small class="muted">${esc(q.buyerName)}${q.co ? " · " + esc(q.co) : ""} · ${q.date}</small><p class="dim" style="margin:0;white-space:pre-line">${esc(q.msg)}</p>${q.reply ? `<p class="alert alert--info" style="margin:0"><b>Sua resposta:</b> ${esc(q.reply)}</p>` : `<form class="form" data-form="reply" data-id="${q.id}"><label class="field"><span>Resposta / proposta</span><textarea id="rp-${q.id}" name="r" rows="3" required></textarea></label><button class="btn btn--primary btn--sm" type="submit" style="align-self:flex-start">Enviar resposta</button></form>`}</div>`).join("")}</div>` : `<p class="muted" style="margin-top:16px">Nenhum pedido de orçamento ainda. Dica: entre como Cliente e peça um orçamento de “Operação Red Team completa”.</p>`}`);
+  return dash(sellerSide(st), `<h1 class="page-title">Pedidos de orçamento</h1>${flashBox()}${qs.length ? `<div class="stack" style="margin-top:16px">${qs.map(q => `<div class="card stack" style="gap:10px"><div class="row between"><b>${esc(q.title)}</b>${pill(q.reply ? ["Respondido","ok"] : ["Aberto","warn"])}</div><small class="muted">${esc(q.buyerName)}${q.co ? " · " + esc(q.co) : ""} · ${q.date}</small><p class="dim" style="margin:0;white-space:pre-line">${esc(q.msg)}</p>${q.reply ? `<p class="alert alert--info" style="margin:0"><b>Sua resposta:</b> ${esc(q.reply)}</p>` : `<form class="form" data-form="reply" data-id="${q.id}"><label class="field"><span>Resposta / proposta</span><textarea id="rp-${q.id}" name="r" rows="3" required></textarea></label><button class="btn btn--primary btn--sm" type="submit" style="align-self:flex-start">Enviar resposta</button></form>`}</div>`).join("")}</div>` : `<p class="muted" style="margin-top:16px">Nenhum orçamento ainda.</p>`}`);
 };
 
 V.conta = () => {
@@ -719,18 +716,18 @@ V.admin = () => {
 };
 V["admin-lojas"] = () => {
   const n = needAdmin(); if (n) return n;
-  return dash(adminSide(), `<h1 class="page-title">Vendedores</h1><p class="dim">Confira documento e credenciais antes de aprovar. Serviços de segurança privada exigem autorização da Polícia Federal.</p><div class="stack" style="margin-top:16px">${[...S.stores].sort((a, b) => (a.status === "PENDING" ? -1 : 0) - (b.status === "PENDING" ? -1 : 0)).map(s => `<div class="card stack" style="gap:10px"><div class="row between"><div><b>${esc(s.name)}</b> <span class="muted">· ${s.kind === "PROFISSIONAL" ? "Profissional" : "Empresa"} · ${esc(s.city)}</span></div><div class="row">${pill(STORE_ST[s.status])}${s.verified ? `<span class="pill pill--ok">Verificado</span>` : ""}</div></div><small class="muted mono">${esc(s.doc)} · ${S.listings.filter(l => l.store === s.id).length} anúncios · comissão ${(s.rate * 100).toFixed(0)}%</small><p class="dim" style="margin:0">${esc(s.bio)}</p>${s.cred ? `<small>Credenciais: <span class="dim">${esc(s.cred)}</span></small>` : ""}
+  return dash(adminSide(), `<h1 class="page-title">Vendedores</h1><p class="dim">Segurança privada exige autorização da PF.</p><div class="stack" style="margin-top:16px">${[...S.stores].sort((a, b) => (a.status === "PENDING" ? -1 : 0) - (b.status === "PENDING" ? -1 : 0)).map(s => `<div class="card stack" style="gap:10px"><div class="row between"><div><b>${esc(s.name)}</b> <span class="muted">· ${s.kind === "PROFISSIONAL" ? "Profissional" : "Empresa"} · ${esc(s.city)}</span></div><div class="row">${pill(STORE_ST[s.status])}${s.verified ? `<span class="pill pill--ok">Verificado</span>` : ""}</div></div><small class="muted mono">${esc(s.doc)} · ${S.listings.filter(l => l.store === s.id).length} anúncios · comissão ${(s.rate * 100).toFixed(0)}%</small><p class="dim" style="margin:0">${esc(s.bio)}</p>${s.cred ? `<small>Credenciais: <span class="dim">${esc(s.cred)}</span></small>` : ""}
   <div class="row">${s.status !== "APPROVED" ? `<button type="button" class="btn btn--sm btn--ghost" data-store="${s.id}" data-do="approve">Aprovar</button>` : `<button type="button" class="btn btn--sm btn--danger" data-store="${s.id}" data-do="suspend">Suspender</button>`}${s.status === "PENDING" ? `<button type="button" class="btn btn--sm btn--danger" data-store="${s.id}" data-do="reject">Recusar</button>` : ""}<button type="button" class="btn btn--sm btn--ghost" data-store="${s.id}" data-do="verify">${s.verified ? "Remover selo" : "Dar selo de verificado"}</button></div></div>`).join("")}</div>`);
 };
 V["admin-curadoria"] = () => {
   const n = needAdmin(); if (n) return n;
   const pend = S.listings.filter(l => l.status === "PENDING"), act = S.listings.filter(l => l.status === "ACTIVE");
-  return dash(adminSide(), `<h1 class="page-title">Curadoria de anúncios</h1><p class="dim">Recuse itens da lista de proibidos (jammers, interceptação, spyware, armas, produtos sem homologação).</p>
+  return dash(adminSide(), `<h1 class="page-title">Curadoria de anúncios</h1>
   <h2 class="h-sm" style="margin-top:24px">Na fila (${pend.length})</h2>${pend.length ? `<div class="stack">${pend.map(l => `<div class="card stack" style="gap:8px"><div class="row between"><a class="link" href="#produto-${l.slug}"><b>${esc(l.title)}</b></a><span class="muted">${esc(storeOf(l).name)} · ${esc(catOf(l).name)} · ${price(l)}</span></div><p class="dim" style="margin:0">${esc(l.summary)}</p>${l.specs.length ? `<small class="muted">${esc(l.specs.map(([k, v]) => k + ": " + v).join(" · "))}</small>` : ""}<div class="row"><button type="button" class="btn btn--primary btn--sm" data-listing="${l.id}" data-do="approve">Aprovar</button><input class="input" id="rs-${l.id}" placeholder="Motivo da recusa" aria-label="Motivo da recusa" style="flex:1;min-width:160px;padding:6px 10px"><button type="button" class="btn btn--danger btn--sm" data-listing="${l.id}" data-do="reject">Recusar</button></div></div>`).join("")}</div>` : `<p class="muted">Nenhum anúncio aguardando.</p>`}
   <h2 class="h-sm" style="margin-top:36px">Publicados (${act.length})</h2><div class="table-wrap"><table class="table"><thead><tr><th>Anúncio</th><th>Vendedor</th><th>Destaque</th><th></th></tr></thead><tbody>${act.map(l => `<tr><td><a class="link" href="#produto-${l.slug}">${esc(l.title)}</a></td><td>${esc(storeOf(l).name)}</td><td>${l.featured ? "★" : "—"}</td><td><div class="row" style="flex-wrap:nowrap"><button type="button" class="btn btn--ghost btn--sm" data-listing="${l.id}" data-do="feature">${l.featured ? "Tirar destaque" : "Destacar"}</button><button type="button" class="btn btn--danger btn--sm" data-listing="${l.id}" data-do="reject">Remover</button></div></td></tr>`).join("")}</tbody></table></div>`);
 };
 
-V.politica = () => `<div class="wrap section" style="max-width:860px"><span class="eyebrow">Confiança</span><h1 class="page-title">Curadoria e itens proibidos</h1><p class="dim" style="font-size:17px">Tudo o que é vendido aqui passa por análise, e algumas categorias não são aceitas em nenhuma hipótese.</p>
+V.politica = () => `<div class="wrap section" style="max-width:860px"><span class="eyebrow">Confiança</span><h1 class="page-title">Curadoria e itens proibidos</h1>
   <h2 class="h-md" style="margin:36px 0 12px">Regras para vendedores</h2><ul class="dim plist">${["Todo vendedor passa por verificação de identidade (CPF ou CNPJ) antes de publicar.","Todo anúncio passa por curadoria antes de ficar público. Alterações voltam para análise.","Serviços de segurança privada (vigilância, escolta, segurança pessoal) exigem autorização da Polícia Federal.","Serviços ofensivos (pentest, Red Team, engenharia social) só podem ser executados com autorização formal e escopo assinado pelo contratante.","Vendedores emitem nota fiscal e respondem pela garantia dos produtos."].map(x => `<li>${x}</li>`).join("")}</ul>
   <h2 class="h-md" style="margin:36px 0 12px">Itens e serviços proibidos</h2><ul class="dim plist">${["Bloqueadores de sinal (jammers): venda e uso proibidos pela Anatel.","Equipamentos para interceptar comunicações ou capturar mensagens de terceiros.","Spyware, stalkerware ou software para monitorar pessoas sem consentimento.","Escutas e câmeras disfarçadas oferecidas para gravar pessoas sem que saibam.","Armas de fogo, munições, armas de choque e itens controlados pelo Exército.","Malware, exploits à venda, credenciais vazadas, bases de dados pessoais ou invasão sem autorização do alvo.","Produtos sem homologação da Anatel quando ela for obrigatória."].map(x => `<li>${x}</li>`).join("")}</ul></div>`;
 
@@ -744,7 +741,7 @@ function render() {
   const pref = [["produto-", V.produto], ["loja-", V.loja], ["pedido-", V.pedido], ["editar-", V.editar]].find(([p]) => h.startsWith(p));
   if (pref) body = pref[1](h.slice(pref[0].length));
   else body = (V[h] || V.naoencontrado)();
-  app.innerHTML = `<div class="demo">Demonstração navegável · pagamentos simulados · dados só neste navegador</div>${header()}<main>${body}</main>${footer()}`;
+  app.innerHTML = `<div class="demo">Demonstração · pagamento simulado</div>${header()}<main>${body}</main>${footer()}`;
 }
 window.addEventListener("hashchange", () => { render(); window.scrollTo(0, 0); });
 
@@ -774,8 +771,8 @@ app.addEventListener("click", e => {
   if (d.act === "clear-q") { filt.q = ""; return render(); }
   if (d.act === "clear-all") { filt = { q: "", type: "", cat: "", sort: "recentes" }; return render(); }
   if (d.cartrm) { S.cart = S.cart.filter(c => c.id !== d.cartrm); save(); return render(); }
-  if (d.pay) { const o = S.orders.find(x => x.code === d.pay); o.status = "PAID"; save(); flash = ["ok", "Pagamento confirmado. Os vendedores já veem o pedido no painel."]; return render(); }
-  if (d.received) { const o = S.orders.find(x => x.code === d.received); o.status = "COMPLETED"; o.items.forEach(i => i.ful = "DELIVERED"); save(); flash = ["ok", "Recebimento confirmado. Repasse liberado aos vendedores. Agora você pode avaliar o que comprou."]; return render(); }
+  if (d.pay) { const o = S.orders.find(x => x.code === d.pay); o.status = "PAID"; save(); flash = ["ok", "Pagamento confirmado."]; return render(); }
+  if (d.received) { const o = S.orders.find(x => x.code === d.received); o.status = "COMPLETED"; o.items.forEach(i => i.ful = "DELIVERED"); save(); flash = ["ok", "Recebimento confirmado. Você já pode avaliar."]; return render(); }
   if (d.toggle) { const l = S.listings.find(x => x.id === d.toggle); l.status = l.status === "ACTIVE" ? "DRAFT" : "PENDING"; save(); flash = ["ok", l.status === "DRAFT" ? "Anúncio pausado." : "Anúncio reenviado para a curadoria."]; return render(); }
   if (d.ship) { const o = S.orders.find(x => x.code === d.order), i = o.items.find(x => x.id === d.ship), tr = document.getElementById("tr-" + d.ship); i.ful = "SHIPPED"; i.track = tr ? tr.value.trim() : ""; if (o.items.every(x => x.ful !== "PENDING")) o.status = "SHIPPED"; save(); return render(); }
   if (d.store) { const s = S.stores.find(x => x.id === d.store); if (d.do === "approve") { s.status = "APPROVED"; } if (d.do === "reject") s.status = "REJECTED"; if (d.do === "suspend") s.status = "SUSPENDED"; if (d.do === "verify") s.verified = !s.verified; save(); return render(); }
@@ -794,11 +791,11 @@ app.addEventListener("submit", e => {
   if (k === "search") { filt = { q: (v.q || "").trim(), type: "", cat: "", sort: "recentes" }; return go("explorar"); }
   if (k === "add") { const l = S.listings.find(x => x.id === f.dataset.id), q = Math.max(1, parseInt(v.q) || 1), c = S.cart.find(x => x.id === l.id); if (c) c.q = Math.min(99, c.q + q); else S.cart.push({ id: l.id, q }); save(); return go("carrinho", ["ok", "Item adicionado ao carrinho."]); }
   if (k === "checkout") { const it = cartItems(), ship = it.some(i => i.l.type === "PHYSICAL"); if (ship && (v.addr || "").trim().length < 10) return err("Informe o endereço completo para entrega."); const code = addOrder(it, v.m, ship ? `${v.name} · ${v.addr}` : "Entrega digital / serviço"); S.cart = []; save(); return go("pedido-" + code); }
-  if (k === "quote") { const l = S.listings.find(x => x.id === f.dataset.id); if ((v.msg || "").trim().length < 15) return err("Descreva sua necessidade em pelo menos 15 caracteres."); S.quotes.push({ id: uid(), listing: l.id, title: l.title, store: l.store, buyer: S.me, buyerName: me().name, co: v.co, msg: v.msg.trim(), date: today() }); save(); return go("conta", ["ok", "Pedido de orçamento enviado. O vendedor responde pelo painel dele, e a resposta aparece aqui."]); }
+  if (k === "quote") { const l = S.listings.find(x => x.id === f.dataset.id); if ((v.msg || "").trim().length < 15) return err("Descreva sua necessidade em pelo menos 15 caracteres."); S.quotes.push({ id: uid(), listing: l.id, title: l.title, store: l.store, buyer: S.me, buyerName: me().name, co: v.co, msg: v.msg.trim(), date: today() }); save(); return go("conta", ["ok", "Orçamento enviado."]); }
   if (k === "reply") { const q = S.quotes.find(x => x.id === f.dataset.id); q.reply = v.r.trim(); save(); flash = ["ok", "Resposta enviada ao cliente."]; return render(); }
   if (k === "review") { const l = S.listings.find(x => x.id === f.dataset.id); if ((v.c || "").trim().length < 5) return err("Escreva um comentário."); l.reviews.unshift({ uid: S.me, name: me().name, r: +v.r, c: v.c.trim() }); save(); flash = ["ok", "Avaliação publicada."]; return render(); }
   if (k === "signup") { if ((v.n || "").trim().length < 2) return err("Informe seu nome."); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.e || "")) return err("E-mail inválido."); if ((v.p || "").length < 8) return err("A senha precisa ter pelo menos 8 caracteres."); const id = "u" + uid(); S.users.push({ id, name: v.n.trim(), email: v.e.trim(), role: "BUYER" }); S.me = id; save(); return go(f.dataset.next, ["ok", "Conta criada."]); }
-  if (k === "store") { const dg = (v.doc || "").replace(/\D/g, ""); if ((v.name || "").trim().length < 2) return err("Informe o nome da loja."); if (!(dg.length === 11 || dg.length === 14)) return err("Informe um CPF (11 dígitos) ou CNPJ (14 dígitos)."); if (!(v.city || "").trim()) return err("Informe cidade e UF."); if ((v.bio || "").trim().length < 30) return err("Descreva sua atuação em pelo menos 30 caracteres."); if (!v.terms) return err("É preciso aceitar as regras de curadoria."); let slug = slugify(v.name) || "loja"; if (S.stores.some(s => s.slug === slug)) slug += "-" + uid().slice(0, 3); S.stores.push({ id: "s" + uid(), slug, name: v.name.trim(), kind: v.kind, city: v.city.trim(), bio: v.bio.trim(), cred: (v.cred || "").trim(), verified: false, rate: 0.12, status: "PENDING", owner: S.me, doc: v.doc.trim() }); save(); return go("painel", ["ok", "Loja enviada para verificação."]); }
+  if (k === "store") { const dg = (v.doc || "").replace(/\D/g, ""); if ((v.name || "").trim().length < 2) return err("Informe o nome da loja."); if (!(dg.length === 11 || dg.length === 14)) return err("Informe um CPF (11 dígitos) ou CNPJ (14 dígitos)."); if (!(v.city || "").trim()) return err("Informe cidade e UF."); if ((v.bio || "").trim().length < 30) return err("Descreva sua atuação em pelo menos 30 caracteres."); if (!v.terms) return err("É preciso aceitar as regras de curadoria."); let slug = slugify(v.name) || "loja"; if (S.stores.some(s => s.slug === slug)) slug += "-" + uid().slice(0, 3); S.stores.push({ id: "s" + uid(), slug, name: v.name.trim(), kind: v.kind, city: v.city.trim(), bio: v.bio.trim(), cred: (v.cred || "").trim(), verified: false, rate: 0.12, status: "PENDING", owner: S.me, doc: v.doc.trim() }); save(); return go("painel"); }
   if (k === "listing") {
     const st = myStore(), id = f.dataset.id, c = CATS.find(x => x.id === v.cat); if (!c) return err("Escolha uma categoria.");
     if ((v.title || "").trim().length < 5) return err("O título precisa ter pelo menos 5 caracteres."); if ((v.summary || "").trim().length < 15) return err("O resumo precisa ter pelo menos 15 caracteres.");
@@ -808,7 +805,7 @@ app.addEventListener("submit", e => {
     const data = { cat: c.id, type: c.type, title: v.title.trim(), summary: v.summary.trim(), desc: (v.desc || "").trim() || v.summary.trim(), price: pr, unit: v.unit, quote, stock: c.type === "PHYSICAL" ? Math.max(0, parseInt(v.stock) || 0) : null, specs, status: "PENDING", reason: "" };
     if (id) Object.assign(S.listings.find(x => x.id === id), data);
     else { let slug = slugify(data.title); if (S.listings.some(x => x.slug === slug)) slug += "-" + uid().slice(0, 3); S.listings.push({ id: uid(), slug, store: st.id, featured: false, reviews: [], ...data }); }
-    save(); return go("painel-anuncios", ["ok", "Anúncio enviado para a curadoria. Para aprovar, entre como Administrador."]);
+    save(); return go("painel-anuncios", ["ok", "Enviado para aprovação."]);
   }
 });
 

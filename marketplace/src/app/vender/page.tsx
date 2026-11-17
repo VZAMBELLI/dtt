@@ -16,19 +16,12 @@ export default async function Vender({ searchParams }: { searchParams: SP }) {
       <div className="product">
         <div>
           <span className="eyebrow">Para vendedores</span>
-          <h1 className="page-title">Cadastre sua loja e anuncie.</h1>
-          <p className="dim" style={{ fontSize: 17 }}>Empresas e profissionais independentes podem anunciar equipamentos, serviços, produtos digitais e horas técnicas. Cada vendedor passa por verificação antes de publicar.</p>
+          <h1 className="page-title">Cadastre sua loja.</h1>
+          <p className="dim" style={{ fontSize: 17 }}>Produtos, serviços, software ou horas técnicas.</p>
           <div className="steps">
             <div className={!user ? "on" : ""}><span className="mono">ETAPA 1</span><b>Conta</b><small>Nome, e-mail e senha</small></div>
             <div className={user ? "on" : ""}><span className="mono">ETAPA 2</span><b>Dados da loja</b><small>CPF/CNPJ, cidade e credenciais</small></div>
             <div><span className="mono">ETAPA 3</span><b>Anúncios</b><small>Produtos e serviços no painel</small></div>
-          </div>
-          <div className="stack" style={{ marginTop: 28 }}>
-            {[["shield", "Selo de verificado", "Documentos e credenciais conferidos aumentam a confiança de quem compra."],
-              ["bolt", "Recebimento automático", "O pagamento é dividido na hora: sua parte vai para você, a comissão para a plataforma."],
-              ["doc", "Orçamentos sob medida", "Serviços complexos recebem pedidos de orçamento direto no seu painel."],
-              ["store", "Painel completo", "Anúncios, estoque, vendas, envios e solicitações em um só lugar."]].map(([i, t, d]) =>
-              <div key={t} className="row" style={{ alignItems: "flex-start", flexWrap: "nowrap" }}><span className="avatar"><Icon name={i} /></span><div><b>{t}</b><p className="dim" style={{ margin: 0, fontSize: 14 }}>{d}</p></div></div>)}
           </div>
         </div>
         <div className="card">
@@ -56,9 +49,9 @@ export default async function Vender({ searchParams }: { searchParams: SP }) {
                 <label className="field"><span>CPF ou CNPJ</span><input id="st-doc" name="document" inputMode="numeric" required /></label>
                 <label className="field"><span>Cidade / UF</span><input id="st-city" name="city" required /></label>
               </div>
-              <label className="field"><span>Sobre você ou sua empresa</span><textarea id="st-bio" name="bio" rows={4} required /></label>
-              <label className="field"><span>Certificações e registros</span><input id="st-cred" name="credentials" placeholder="Ex.: OSCP, ISO 27001 LI, autorização da Polícia Federal" /><small>Serviços de segurança privada exigem autorização da Polícia Federal.</small></label>
-              <label className="row" style={{ flexWrap: "nowrap", alignItems: "flex-start", fontSize: 14 }}><input id="st-terms" type="checkbox" name="terms" style={{ marginTop: 4 }} /><span className="dim">Li e aceito as <Link className="link" href="/politica">regras de curadoria e a lista de itens proibidos</Link>.</span></label>
+              <label className="field"><span>O que você faz</span><textarea id="st-bio" name="bio" rows={4} required /></label>
+              <label className="field"><span>Certificações e registros</span><input id="st-cred" name="credentials" placeholder="OSCP, ISO 27001, autorização PF" /><small>Segurança privada exige autorização da PF.</small></label>
+              <label className="row" style={{ flexWrap: "nowrap", alignItems: "flex-start", fontSize: 14 }}><input id="st-terms" type="checkbox" name="terms" style={{ marginTop: 4 }} /><span className="dim">Aceito as <Link className="link" href="/politica">regras</Link>.</span></label>
               <button className="btn btn--primary btn--block" type="submit">Enviar para análise</button>
             </form>
           )}

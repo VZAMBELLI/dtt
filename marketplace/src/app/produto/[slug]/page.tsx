@@ -64,12 +64,12 @@ export default async function Produto({ params, searchParams }: { params: Promis
             {quote ? (
               <>
                 <div className="big">{price(l)}</div>
-                <p className="dim" style={{ margin: 0 }}>Este {physical ? "item" : "serviço"} é dimensionado conforme o seu cenário. Descreva o que precisa e o vendedor responde com uma proposta.</p>
+                <p className="dim" style={{ margin: 0 }}>Descreva o que precisa. O vendedor envia a proposta.</p>
                 {user ? (
                   <form action={requestQuote} className="form">
                     <input type="hidden" name="slug" value={l.slug} />
                     <label className="field"><span>Empresa (opcional)</span><input id="quote-company" name="company" autoComplete="organization" /></label>
-                    <label className="field"><span>O que você precisa?</span><textarea id="quote-message" name="message" rows={4} placeholder="Escopo, prazos, local, quantidade de pessoas ou ativos…" required /></label>
+                    <label className="field"><span>O que você precisa?</span><textarea id="quote-message" name="message" rows={4} placeholder="Escopo, prazo, local" required /></label>
                     <button className="btn btn--primary btn--block" type="submit">Solicitar orçamento</button>
                   </form>
                 ) : <Link className="btn btn--primary btn--block" href={`/entrar?next=/produto/${l.slug}`}>Entrar para solicitar orçamento</Link>}
@@ -86,7 +86,7 @@ export default async function Produto({ params, searchParams }: { params: Promis
                 </form>
               </>
             )}
-            <p className="mono muted" style={{ margin: 0 }}>🔒 Pagamento protegido · repasse ao vendedor após confirmação</p>
+            <p className="mono muted" style={{ margin: 0 }}>Pagamento protegido</p>
           </div>
 
           <Link href={`/loja/${l.store.slug}`} className="sellerbox">

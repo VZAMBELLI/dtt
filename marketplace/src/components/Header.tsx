@@ -18,7 +18,7 @@ export async function Header() {
           </Link>
           <form action="/explorar" className="search" role="search">
             <label htmlFor="q-top" className="sr">Buscar</label>
-            <input id="q-top" name="q" placeholder="Buscar câmeras, pentest, consultores…" />
+            <input id="q-top" name="q" placeholder="Buscar" />
             <button type="submit" aria-label="Buscar"><Icon name="search" size={16} /></button>
           </form>
           <nav className="top__nav" aria-label="Conta">
